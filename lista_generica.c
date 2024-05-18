@@ -4,8 +4,8 @@
 #include <time.h>
 #include "materias.c"
 #include "nodo.c"
-#ifndef LISTAMATERIAS
-#define LISTAMATERIAS
+#ifndef LISTAGENERICA
+#define LISTAGENERICA
 
 
 typedef struct structListaGenerica {
@@ -14,7 +14,8 @@ typedef struct structListaGenerica {
     int size;
 } ListaGenerica;
 
-ListaGenerica *crearNuevaLista(){
+
+ListaGenerica *crearNuevaListaGenerica(){
     ListaGenerica *lista = malloc(sizeof(ListaGenerica));
     lista->head = NULL;
     lista->tail = NULL;
@@ -32,10 +33,10 @@ void *agregarNodo(ListaGenerica *lista, Nodo *nodo) {
 }
 
 //imprimir lista
-void imprimir(ListaGenerica *lista) {
+void imprimirListaGenerica(ListaGenerica *lista) {
     Nodo *cursor = lista->head;
     while (cursor != NULL) {
-        printf("%c", cursor->materia->nombre);
+        printf("ID Materia: %d\nNota Materia: %d", cursor->materias[0][0],cursor->materias[0][1]);
         cursor = cursor->proximo;
     }
     printf("\n");

@@ -14,25 +14,24 @@ typedef struct structLista {
     int size;
 } ListaMaterias;
 
-ListaMaterias *crearNuevaLista(){
+ListaMaterias *crearNuevaListaMaterias(){
     ListaMaterias *lista = malloc(sizeof(ListaMaterias));
     lista->head = NULL;
     lista->tail = NULL;
     return lista;
 }
 
-void *agregarNodo(ListaMaterias *lista, NodoMateria *nodo) {
+void *agregarMateria(ListaMaterias *lista, NodoMateria *nodo) {
 
     NodoMateria *c = lista->head;
     while (c->proximo != NULL){
         c = c->proximo;
-    };
+    }
     c->proximo = nodo;
-    return lista;
 }
 
 //imprimir lista
-void imprimir(ListaMaterias *lista) {
+void imprimirMaterias(ListaMaterias *lista) {
     NodoMateria *cursor = lista->head;
     while (cursor != NULL) {
         printf("%c", cursor->materia->nombre);

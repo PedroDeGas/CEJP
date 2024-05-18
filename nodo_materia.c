@@ -6,15 +6,18 @@
 #ifndef NODOMATERIA
 #define NODOMATERIA
 
-typedef struct structNodo {
+typedef struct structNodoMateria {
     Materia *materia;
-    struct structNodo *proximo;
+    int nota;
+    struct structNodoMateria *proximo;
 } NodoMateria;
 
 // crear un nuevo nodo
-NodoMateria *crearNuevoNodo(Materia *materia) {
+NodoMateria *crearNuevoNodoMateria(Materia *materia) {
     NodoMateria *nuevoNodo = malloc(sizeof(NodoMateria));
     nuevoNodo->materia = materia;
+    nuevoNodo->nota = NULL;
+    nuevoNodo->proximo = NULL;
     return nuevoNodo;
 }
 
