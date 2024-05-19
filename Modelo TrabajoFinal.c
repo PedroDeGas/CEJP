@@ -27,6 +27,7 @@ void alta_estudiante(Estudiante **estudiantes, char nombre[], int edad) {
     *estudiantes = new_estudiante;
 }
 
+//modificar estudiante
 void modificar_estudiante(Estudiante *estudiantes, char nombre[], int edad) {
     Estudiante *current = estudiantes;
     while (current!= NULL) {
@@ -38,6 +39,7 @@ void modificar_estudiante(Estudiante *estudiantes, char nombre[], int edad) {
     }
 }
 
+//eliminar estudiantes
 void eliminar_estudiante(Estudiante **estudiantes, char nombre[]) {
     Estudiante *current = *estudiantes;
     Estudiante *previous = NULL;
@@ -56,6 +58,7 @@ void eliminar_estudiante(Estudiante **estudiantes, char nombre[]) {
     }
 }
 
+//listar estudiantes
 void listar_estudiantes(Estudiante *estudiantes) {
     Estudiante *current = estudiantes;
     while (current!= NULL) {
@@ -64,6 +67,7 @@ void listar_estudiantes(Estudiante *estudiantes) {
     }
 }
 
+//buscar estudiantes por nombre
 void buscar_estudiante_nombre(Estudiante *estudiantes, char nombre[]) {
     Estudiante *current = estudiantes;
     while (current!= NULL) {
@@ -75,6 +79,7 @@ void buscar_estudiante_nombre(Estudiante *estudiantes, char nombre[]) {
     }
 }
 
+//buscar estudiantes por edad
 void buscar_estudiante_edad(Estudiante *estudiantes, int edad_min, int edad_max) {
     Estudiante *current = estudiantes;
     while (current!= NULL) {
@@ -94,6 +99,7 @@ void alta_materia(Materia **materias, char nombre[], int nota) {
     *materias = new_materia;
 }
 
+//modificar materias
 void modificar_materia(Materia *materias, char nombre[], int nota) {
     Materia *current = materias;
     while (current!= NULL) {
@@ -105,6 +111,7 @@ void modificar_materia(Materia *materias, char nombre[], int nota) {
     }
 }
 
+//eliminar materias
 void eliminar_materia(Materia **materias, char nombre[]) {
     Materia *current = *materias;
     Materia *previous = NULL;
@@ -123,6 +130,7 @@ void eliminar_materia(Materia **materias, char nombre[]) {
     }
 }
 
+//listar materias
 void listar_materias(Materia *materias) {
     Materia *current = materias;
     while (current!= NULL) {
@@ -131,12 +139,13 @@ void listar_materias(Materia *materias) {
     }
 }
 
-
+//anotarse a materias
 void anotar_estudiante_materia(Estudiante *estudiante, Materia *materia) {
     materia->estudiantes = estudiante;
     estudiante->materias = materia;
 }
 
+//rendir materias
 void rendir_materia(Estudiante *estudiante, char nombre[], int nota) {
     Materia *current = estudiante->materias;
     while (current!= NULL) {
@@ -148,6 +157,16 @@ void rendir_materia(Estudiante *estudiante, char nombre[], int nota) {
     }
 }
 
+// materias rendidas
+void mostrar_materias_rendidas(Materia *materias) {
+    Materia *current = materias;
+    while (current!= NULL) {
+        if (current->nota > 0) {
+            printf("Nombre: %s, Nota: %d\n", current->nombre, current->nota);
+        }
+        current = current->siguiente;
+    }
+}
 int main() {
     // Crear listas vacías
     Estudiante *estudiantes = NULL;
