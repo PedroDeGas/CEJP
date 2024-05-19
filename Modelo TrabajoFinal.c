@@ -6,7 +6,7 @@
 typedef struct Estudiante {
     char nombre[10];
     int edad;
-    struct Estudiante *siguiente;
+    struct Estudiante *proximo;
     struct Materia *materias;
 } Estudiante;
 
@@ -14,7 +14,7 @@ typedef struct Estudiante {
 typedef struct Materia {
     char nombre[10];
     int nota;
-    struct Materia *siguiente;
+    struct Materia *proximo;
     struct Estudiante *estudiantes;
 } Materia;
 
@@ -23,70 +23,65 @@ void alta_estudiante(Estudiante **estudiantes, char nombre[], int edad) {
     Estudiante *new_estudiante = (Estudiante*) malloc(sizeof(Estudiante));
     strcpy(new_estudiante->nombre, nombre);
     new_estudiante->edad = edad;
-    new_estudiante->siguiente = *estudiantes;
+    new_estudiante->proximo = *estudiantes;
     *estudiantes = new_estudiante;
 }
 
-//modificar estudiante
 void modificar_estudiante(Estudiante *estudiantes, char nombre[], int edad) {
-    Estudiante *current = estudiantes;
-    while (current!= NULL) {
-        if (strcmp(current->nombre, nombre) == 0) {
-            current->edad = edad;
+    Estudiante *actual= estudiantes;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+          actual->edad = edad;
             break;
         }
-        current = current->siguiente;
+       actual = actual->proximo;
     }
 }
 
-//eliminar estudiantes
 void eliminar_estudiante(Estudiante **estudiantes, char nombre[]) {
-    Estudiante *current = *estudiantes;
+    Estudiante *actual = *estudiantes;
     Estudiante *previous = NULL;
-    while (current!= NULL) {
-        if (strcmp(current->nombre, nombre) == 0) {
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
             if (previous == NULL) {
-                *estudiantes = current->siguiente;
+                *estudiantes = actual->proximo;
             } else {
-                previous->siguiente = current->siguiente;
+                previous->proximo = actual->proximo;
             }
-            free(current);
+            free(actual);
             break;
         }
-        previous = current;
-        current = current->siguiente;
+        previous =actual;
+        actual= actual->proximo;
     }
 }
 
-//listar estudiantes
 void listar_estudiantes(Estudiante *estudiantes) {
-    Estudiante *current = estudiantes;
-    while (current!= NULL) {
-        printf("Nombre: %s, Edad: %d\n", current->nombre, current->edad);
-        current = current->siguiente;
+    Estudiante *actual = estudiantes;
+    while (actual!= NULL) {
+        printf("Nombre: %s, Edad: %d\n", actual->nombre,actual->edad);
+        actual = actual->proximo;
     }
 }
 
-//buscar estudiantes por nombre
 void buscar_estudiante_nombre(Estudiante *estudiantes, char nombre[]) {
-    Estudiante *current = estudiantes;
-    while (current!= NULL) {
-        if (strcmp(current->nombre, nombre) == 0) {
-            printf("Estudiante encontrado: %s, Edad: %d\n", current->nombre, current->edad);
+    Estudiante *actual= estudiantes;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            printf("Estudiante encontrado: %s, Edad: %d\n",actual->nombre,actual->edad);
             break;
         }
-        current = current->siguiente;
+       actual= actual->proximo;
     }
 }
 
-//buscar estudiantes por edad
 void buscar_estudiante_edad(Estudiante *estudiantes, int edad_min, int edad_max) {
-    Estudiante *current = estudiantes;
-    while (current!= NULL) {
-        if (current->edad >= edad_min && current->edad <= edad_max) {
-            printf("Estudiante encontrado: %s, Edad: %d\n", current->nombre, current->edad);
+    Estudiante *actual = estudiantes;
+    while (actual!= NULL) {
+        if (actual->edad >= edad_min && actual->edad <= edad_max) {
+            printf("Estudiante encontrado: %s, Edad: %d\n", actual->nombre, actual->edad);
         }
-        current = current->siguiente;
+      actual= actual->proximo;
     }
 }
 
@@ -95,78 +90,75 @@ void alta_materia(Materia **materias, char nombre[], int nota) {
     Materia *new_materia = (Materia*) malloc(sizeof(Materia));
     strcpy(new_materia->nombre, nombre);
     new_materia->nota = nota;
-    new_materia->siguiente = *materias;
+    new_materia->proximo = *materias;
     *materias = new_materia;
 }
 
-//modificar materias
 void modificar_materia(Materia *materias, char nombre[], int nota) {
-    Materia *current = materias;
-    while (current!= NULL) {
-        if (strcmp(current->nombre, nombre) == 0) {
-            current->nota = nota;
+    Materia *actual = materias;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            actual->nota = nota;
             break;
         }
-        current = current->siguiente;
+       actual= actual->proximo;
     }
 }
 
-//eliminar materias
 void eliminar_materia(Materia **materias, char nombre[]) {
-    Materia *current = *materias;
+    Materia *actual = *materias;
     Materia *previous = NULL;
-    while (current!= NULL) {
-        if (strcmp(current->nombre, nombre) == 0) {
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
             if (previous == NULL) {
-                *materias = current->siguiente;
+                *materias = actual->proximo;
             } else {
-                previous->siguiente = current->siguiente;
+                previous->proximo= actual->proximo;
             }
-            free(current);
+            free(actual);
             break;
         }
-        previous = current;
-        current = current->siguiente;
+        previous = actual;
+        actual= actual->proximo;
     }
 }
 
-//listar materias
 void listar_materias(Materia *materias) {
-    Materia *current = materias;
-    while (current!= NULL) {
-        printf("Nombre: %s, Nota: %d\n", current->nombre, current->nota);
-        current = current->siguiente;
+    Materia *actual = materias;
+    while (actual!= NULL) {
+        printf("Nombre: %s, Nota: %d\n", actual->nombre, actual->nota);
+        actual= actual->proximo;
     }
 }
 
-//anotarse a materias
+
 void anotar_estudiante_materia(Estudiante *estudiante, Materia *materia) {
     materia->estudiantes = estudiante;
     estudiante->materias = materia;
 }
 
-//rendir materias
 void rendir_materia(Estudiante *estudiante, char nombre[], int nota) {
-    Materia *current = estudiante->materias;
-    while (current!= NULL) {
-        if (strcmp(current->nombre, nombre) == 0) {
-            current->nota = nota;
+    Materia *actual = estudiante->materias;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            actual->nota = nota;
             break;
         }
-        current = current->siguiente;
+        actual= actual->proximo;
     }
 }
 
 // materias rendidas
 void mostrar_materias_rendidas(Materia *materias) {
-    Materia *current = materias;
-    while (current!= NULL) {
-        if (current->nota > 0) {
-            printf("Nombre: %s, Nota: %d\n", current->nombre, current->nota);
+    Materia *actual= materias;
+    while (actual!= NULL) {
+        if (actual->nota > 0) {
+            printf("Nombre: %s, Nota: %d\n", actual->nombre, actual->nota);
         }
-        current = current->siguiente;
+        actual = actual->proximo;
     }
 }
+
 int main() {
     // Crear listas vacías
     Estudiante *estudiantes = NULL;
@@ -191,15 +183,15 @@ int main() {
     // Anotar estudiantes en materias
    printf("Los estudiantes se anotan a las materias:\n");
     anotar_estudiante_materia(estudiantes, materias);
-    anotar_estudiante_materia(estudiantes->siguiente, materias->siguiente);
+    anotar_estudiante_materia(estudiantes->proximo, materias->proximo);
     
 
     // Rendir materias
     printf("Lista de materias rendidas:\n");
     rendir_materia(estudiantes, "Matemáticas", 8);
-    rendir_materia(estudiantes->siguiente, "Biologia", 7);
+    rendir_materia(estudiantes->proximo, "Biologia", 7);
     rendir_materia(estudiantes, "Algebra", 10);
-    rendir_materia(estudiantes->siguiente, "Física", 9);
+    rendir_materia(estudiantes->proximo, "Física", 9);
 
 
     // Listar estudiantes
