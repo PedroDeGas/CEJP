@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Estructura de datos para los nodos del árbol
+typedef struct Nodo {
+    char nombre[50];
+    struct Nodo *izquierda;
+    struct Nodo *derecha;
+} Nodo;
+
+// Funciones para los nodos del árbol
+void imprimir_arbol(Nodo *raiz) {
+    if (raiz == NULL) {
+        return;
+    }
+    imprimir_arbol(raiz->izquierda);
+    printf("%s\n", raiz->nombre);
+    imprimir_arbol(raiz->derecha);
+}
+
+Nodo *agregar_nodo(Nodo *raiz, char nombre[]) {
+    Nodo *nuevo_nodo = (Nodo*) malloc(sizeof(Nodo));
+    strcpy(nuevo_nodo->nombre, nombre);
+    nuevo_nodo->izquierda = NULL;
+    nuevo_nodo->derecha = NULL;
+    if (raiz == NULL) {
+        raiz = nuevo_nodo;
+    } else {
+        Nodo *actual = raiz;
+        Nodo *anterior = NULL;
+        while (actual!= NULL) {
+            anterior = actual;
+            if (strcmp(actual->nombre, nombre) < 0) {
+                actual = actual->derecha;
+            } else {
+                actual = actual->izquierda;
+            }
+        }
+        if (strcmp(anterior->nombre, nombre) < 0) {
+            anterior->derecha = nuevo_nodo;
+        } else {
+            anterior->izquierda = nuevo_nodo;
+        }
+    }
+    return raiz;
+}
+
+Nodo *buscar_nodo(Nodo *raiz, char nombre[]) {
+    if (raiz == NULL) {
+        return NULL;
+    }
+    if (strcmp(raiz->nombre, nombre) == 0) {
+        return raiz;
+    }
+    Nodo *izquierda = buscar_nodo(raiz->izquierda, nombre);
+    if (izquierda!= NULL) {
+        return izquierda;
+    }
+    Nodo *derecha = buscar_nodo(raiz->derecha, nombre);
+    return derecha;
+}
+
+int main() {
+    // Crear árbol vacío
+    Nodo *raiz = NULL;
+
+    // Agregar nodos al árbol
+    raiz = agregar_nodo(raiz, "Matemáticas");
+    raiz = agregar_nodo(raiz, "Física");
+    raiz = agregar_nodo(raiz, "Química");
+    raiz = agregar_nodo(raiz, "Biología");
+    raiz = agregar_nodo(raiz, "Algebra");
+     raiz = agregar_nodo(raiz, "Programación");
+    
+    
+    // Imprimir árbol
+    imprimir_arbol(raiz);
+
+    return 0;
+}
