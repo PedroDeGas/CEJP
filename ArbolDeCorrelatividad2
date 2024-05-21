@@ -1,3 +1,7 @@
+//codigo para la siguiente consigna:
+//árboles de correlatividad de materias 2(Unido en el main con los otros codigos)
+//codigo funcionando
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
