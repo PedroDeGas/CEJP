@@ -249,7 +249,7 @@ void mostrarArbolCorrelatividad(Materia* arbol) {
     printf("---------------------\n");
 }
 
-// Función para imprimir el árbol en preorden con indentación
+// Función para imprimir el árbol en preorden 
 void imprimirArbolEnPreordenConIndentacion(Materia* arbol, int nivel) {
     if (arbol!= NULL) {
         for (int i = 0; i < nivel; i++) {
