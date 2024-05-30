@@ -1,0 +1,27 @@
+# ninja log v5
+1	136	7386407803386538	build.ninja	6fb690347a547c2f
+34	147	7387359113421093	CMakeFiles/Sistema.dir/nodo_materia.c.obj	dc9bad10f422328e
+3	81	7387370629630820	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+2	81	7387333997842743	CMakeFiles/Sistema.dir/fechas.c.obj	d1ccb734a3dd6786
+10	98	7387370629810965	CMakeFiles/Sistema.dir/lista_estudiantes.c.obj	b75494b709738a27
+13	155	7387359113549063	CMakeFiles/Sistema.dir/lista_materias.c.obj	c135e1c398ada275
+10	139	7387359113310902	CMakeFiles/Sistema.dir/materias.c.obj	f808f9280ee3be79
+17	144	7387359113421093	CMakeFiles/Sistema.dir/lista_materiasEnCurso.c.obj	33e7a283f215deb9
+13	84	7387370629656201	CMakeFiles/Sistema.dir/nodo_estudiante.c.obj	d09f47b77244c8b4
+7	99	7387370629831854	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
+25	149	7387359113471518	CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj	f21978fe6c57b5b1
+100	189	7387370630675235	Sistema.exe	95b10c78c4dd5c07
+2	77	7387373833862222	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+17	98	7387373834067604	CMakeFiles/Sistema.dir/nodo_estudiante.c.obj	d09f47b77244c8b4
+13	100	7387373834096627	CMakeFiles/Sistema.dir/lista_materiasEnCurso.c.obj	33e7a283f215deb9
+6	101	7387373834096627	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
+10	112	7387373834226006	CMakeFiles/Sistema.dir/lista_estudiantes.c.obj	b75494b709738a27
+112	203	7387373835080665	Sistema.exe	95b10c78c4dd5c07
+2	65	7387374116894296	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+65	152	7387374117722788	Sistema.exe	95b10c78c4dd5c07
+2	70	7387375743631044	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+2	79	7387376595111516	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
+80	171	7387376595983319	Sistema.exe	95b10c78c4dd5c07
+7	81	7387376928237204	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
+3	64	7387376981349231	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+65	150	7387376982168839	Sistema.exe	95b10c78c4dd5c07

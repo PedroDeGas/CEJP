@@ -1,0 +1,18 @@
+#ifndef CEJP_LISTA_MATERIAS_H
+#define CEJP_LISTA_MATERIAS_H
+#include "nodo_materia.h"
+
+typedef struct structLista {
+    NodoMateria *head;
+    NodoMateria *tail;
+    int size;
+} ListaMaterias;
+
+ListaMaterias *crearNuevaListaMaterias();
+void agregarMateria(ListaMaterias *lista, Materia *materia);
+void imprimirMaterias(ListaMaterias *lista);
+void eliminarMateria(ListaMaterias *lista, int id);
+Materia *buscarMateriaPorId(ListaMaterias *lista, int id);
+Materia *buscarMateriaPorNombre(ListaMaterias *lista, char *nombre);
+void modificarNombreMateria(ListaMaterias *lista);
+#endif
