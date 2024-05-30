@@ -1,7 +1,6 @@
 //codigo funcionando 
 //codigo sumado a las materias desaprobadas y el arbol de correlatividad
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +20,8 @@ typedef struct Materia {
     struct Materia *proximo;
     struct Estudiante *estudiantes;
     struct Materia *prerequisito; // Materia anterior requerida
+    struct Materia* izquierda;
+    struct Materia* derecha;
 } Materia;
 
 // Funciones para los estudiantes
@@ -190,48 +191,93 @@ typedef struct Nodo {
 } Nodo;
 
 // Funciones para los nodos del árbol
-Nodo *crear_nodo(char nombre[]) {
-    Nodo *nuevo_nodo = (Nodo*) malloc(sizeof(Nodo));
-    strcpy(nuevo_nodo->nombre, nombre);
-    nuevo_nodo->izquierda = NULL;
-    nuevo_nodo->derecha = NULL;
-    return nuevo_nodo;
+
+// Función para crear un nuevo nodo de materia
+Materia* crearNodoMateria(char* nombre) {
+    Materia* nuevaMateria = (Materia*)malloc(sizeof(Materia));
+    strcpy(nuevaMateria->nombre, nombre);
+    nuevaMateria->izquierda = NULL;
+    nuevaMateria->derecha = NULL;
+    return nuevaMateria;
 }
 
-Nodo *agregar_nodo(Nodo *raiz, char nombre[]) {
-    if (raiz == NULL) {
-        return crear_nodo(nombre);
-    }
-    if (strcmp(raiz->nombre, nombre) < 0) {
-        raiz->derecha = agregar_nodo(raiz->derecha, nombre);
+// Función para agregar una materia al árbol de correlatividad
+void agregarMateria(Materia** arbol, char* nombre) {
+    if (*arbol == NULL) {
+        *arbol = crearNodoMateria(nombre);
     } else {
-        raiz->izquierda = agregar_nodo(raiz->izquierda, nombre);
+        if (strcmp(nombre, (*arbol)->nombre) < 0) {
+            agregarMateria(&(*arbol)->izquierda, nombre);
+        } else {
+            agregarMateria(&(*arbol)->derecha, nombre);
+        }
     }
-    return raiz;
 }
 
-void imprimir_arbol(Nodo *raiz) {
-    if (raiz == NULL) {
-        return;
+// Función para imprimir el árbol de correlatividad en orden
+void imprimirArbolEnOrden(Materia* arbol) {
+    if (arbol!= NULL) {
+        imprimirArbolEnOrden(arbol->izquierda);
+        printf("%s\n", arbol->nombre);
+        imprimirArbolEnOrden(arbol->derecha);
     }
-    imprimir_arbol(raiz->izquierda);
-    printf("%s\n", raiz->nombre);
-    imprimir_arbol(raiz->derecha);
 }
 
+// Función para imprimir el árbol de correlatividad en preorden
+void imprimirArbolEnPreorden(Materia* arbol) {
+    if (arbol!= NULL) {
+        printf("%s\n", arbol->nombre);
+        imprimirArbolEnPreorden(arbol->izquierda);
+        imprimirArbolEnPreorden(arbol->derecha);
+    }
+}
+
+// Función para imprimir el árbol de correlatividad en postorden
+void imprimirArbolEnPostorden(Materia* arbol) {
+    if (arbol!= NULL) {
+        imprimirArbolEnPostorden(arbol->izquierda);
+        imprimirArbolEnPostorden(arbol->derecha);
+        printf("%s\n", arbol->nombre);
+    }
+}
+
+// Función para imprimir el árbol de correlatividad en el menú principal
+void mostrarArbolCorrelatividad(Materia* arbol) {
+    printf("Árbol de Correlatividad:\n");
+    printf("---------------------\n");
+    imprimirArbolEnPreorden(arbol);
+    printf("---------------------\n");
+}
+
+// Función para imprimir el árbol en preorden con indentación
+void imprimirArbolEnPreordenConIndentacion(Materia* arbol, int nivel) {
+    if (arbol!= NULL) {
+        for (int i = 0; i < nivel; i++) {
+            printf("  ");
+        }
+        printf("%s\n", arbol->nombre);
+        imprimirArbolEnPreordenConIndentacion(arbol->izquierda, nivel + 1);
+        imprimirArbolEnPreordenConIndentacion(arbol->derecha, nivel + 1);
+    }
+}
 
 int main() {
       // Crear árbol vacío
-    Nodo *raiz = NULL;
+   
+    Materia* arbol = NULL;
 
-    // Agregar nodos al árbol
-    raiz = agregar_nodo(raiz, "Matemáticas");
-    raiz = agregar_nodo(raiz, "Física");
-    raiz = agregar_nodo(raiz, "Química");
-    raiz = agregar_nodo(raiz, "Biología");
+    // Agregar materias al árbol
+    agregarMateria(&arbol, "Matemáticas");
+    agregarMateria(&arbol, "Física");
+    agregarMateria(&arbol, "Química");
+    agregarMateria(&arbol, "Biología");
+    agregarMateria(&arbol, "Programación");
+    agregarMateria(&arbol, "Estructuras de Datos");
+    agregarMateria(&arbol, "Algoritmos");
 
-    // Imprimir árbol
-    imprimir_arbol(raiz);
+    // Mostrar el árbol de correlatividad
+    mostrarArbolCorrelatividad(arbol);
+   
     
     // Crear listas vacías
     Estudiante *estudiantes = NULL;
@@ -308,3 +354,6 @@ int main() {
     }
     return 0;
 }
+
+
+
