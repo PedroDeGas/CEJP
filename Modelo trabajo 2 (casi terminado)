@@ -1,0 +1,310 @@
+//codigo funcionando 
+//codigo sumado a las materias desaprobadas y el arbol de correlatividad
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Estructura de datos para los estudiantes
+typedef struct Estudiante {
+    char nombre[10];
+    int edad;
+    struct Estudiante *proximo;
+    struct Materia *materias;
+} Estudiante;
+
+// Estructura de datos para las materias
+typedef struct Materia {
+    char nombre[10];
+    int nota;
+    struct Materia *proximo;
+    struct Estudiante *estudiantes;
+    struct Materia *prerequisito; // Materia anterior requerida
+} Materia;
+
+// Funciones para los estudiantes
+void alta_estudiante(Estudiante **estudiantes, char nombre[], int edad) {
+    Estudiante *new_estudiante = (Estudiante*) malloc(sizeof(Estudiante));
+    strcpy(new_estudiante->nombre, nombre);
+    new_estudiante->edad = edad;
+    new_estudiante->proximo = *estudiantes;
+    *estudiantes = new_estudiante;
+}
+
+void modificar_estudiante(Estudiante *estudiantes, char nombre[], int edad) {
+    Estudiante *actual= estudiantes;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+          actual->edad = edad;
+            break;
+        }
+       actual = actual->proximo;
+    }
+}
+
+void eliminar_estudiante(Estudiante **estudiantes, char nombre[]) {
+    Estudiante *actual = *estudiantes;
+    Estudiante *previous = NULL;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            if (previous == NULL) {
+                *estudiantes = actual->proximo;
+            } else {
+                previous->proximo = actual->proximo;
+            }
+            free(actual);
+            break;
+        }
+        previous =actual;
+        actual= actual->proximo;
+    }
+}
+
+void listar_estudiantes(Estudiante *estudiantes) {
+    Estudiante *actual = estudiantes;
+    while (actual!= NULL) {
+        printf("Nombre: %s, Edad: %d\n", actual->nombre,actual->edad);
+        actual = actual->proximo;
+    }
+}
+
+void buscar_estudiante_nombre(Estudiante *estudiantes, char nombre[]) {
+    Estudiante *actual= estudiantes;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            printf("Estudiante encontrado: %s, Edad: %d\n",actual->nombre,actual->edad);
+            break;
+        }
+       actual= actual->proximo;
+    }
+}
+
+void buscar_estudiante_edad(Estudiante *estudiantes, int edad_min, int edad_max) {
+    Estudiante *actual = estudiantes;
+    while (actual!= NULL) {
+        if (actual->edad >= edad_min && actual->edad <= edad_max) {
+            printf("Estudiante encontrado: %s, Edad: %d\n", actual->nombre, actual->edad);
+        }
+      actual= actual->proximo;
+    }
+}
+
+// Funciones para las materias
+void alta_materia(Materia **materias, char nombre[], int nota) {
+    Materia *new_materia = (Materia*) malloc(sizeof(Materia));
+    strcpy(new_materia->nombre, nombre);
+    new_materia->nota = nota;
+    new_materia->proximo = *materias;
+    *materias = new_materia;
+}
+
+void modificar_materia(Materia *materias, char nombre[], int nota) {
+    Materia *actual = materias;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            actual->nota = nota;
+            break;
+        }
+       actual= actual->proximo;
+    }
+}
+
+void eliminar_materia(Materia **materias, char nombre[]) {
+    Materia *actual = *materias;
+    Materia *previous = NULL;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            if (previous == NULL) {
+                *materias = actual->proximo;
+            } else {
+                previous->proximo= actual->proximo;
+            }
+            free(actual);
+            break;
+        }
+        previous = actual;
+        actual= actual->proximo;
+    }
+}
+// //funciones para anotarse y verificar si esta aprobado o no
+int puede_anotarse(Estudiante *estudiante, Materia *materia) {
+    if (materia->prerequisito!= NULL) {
+        // Verificar si el estudiante aprobó la materia anterior
+        if (estudiante->materias!= NULL) {
+            Materia *actual = estudiante->materias;
+            while (actual!= NULL) {
+                if (strcmp(actual->nombre, materia->prerequisito->nombre) == 0) {
+                    // Si la materia anterior está desaprobada, no se permite anotarse
+                    if (actual->nota < 4) {
+                        return 0; // No se permite anotarse
+                    }
+                }
+                actual = actual->proximo;
+            }
+        }
+    }
+    return 1; // Se permite anotarse
+}
+
+void listar_materias(Materia *materias) {
+    Materia *actual = materias;
+    while (actual!= NULL) {
+        printf("Nombre: %s, Nota: %d\n", actual->nombre, actual->nota);
+        actual= actual->proximo;
+    }
+}
+
+
+void anotar_estudiante_materia(Estudiante *estudiante, Materia *materia) {
+    materia->estudiantes = estudiante;
+    estudiante->materias = materia;
+}
+
+void rendir_materia(Estudiante *estudiante, char nombre[], int nota) {
+    Materia *actual = estudiante->materias;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            actual->nota = nota;
+            break;
+        }
+        actual= actual->proximo;
+    }
+}
+
+// materias rendidas
+void mostrar_materias_rendidas(Materia *materias) {
+    Materia *actual= materias;
+    while (actual!= NULL) {
+        if (actual->nota > 0) {
+            printf("Nombre: %s, Nota: %d\n", actual->nombre, actual->nota);
+        }
+        actual = actual->proximo;
+    }
+}
+// Estructura de datos para los nodos del árbol
+typedef struct Nodo {
+    char nombre[50];
+    struct Nodo *izquierda;
+    struct Nodo *derecha;
+} Nodo;
+
+// Funciones para los nodos del árbol
+Nodo *crear_nodo(char nombre[]) {
+    Nodo *nuevo_nodo = (Nodo*) malloc(sizeof(Nodo));
+    strcpy(nuevo_nodo->nombre, nombre);
+    nuevo_nodo->izquierda = NULL;
+    nuevo_nodo->derecha = NULL;
+    return nuevo_nodo;
+}
+
+Nodo *agregar_nodo(Nodo *raiz, char nombre[]) {
+    if (raiz == NULL) {
+        return crear_nodo(nombre);
+    }
+    if (strcmp(raiz->nombre, nombre) < 0) {
+        raiz->derecha = agregar_nodo(raiz->derecha, nombre);
+    } else {
+        raiz->izquierda = agregar_nodo(raiz->izquierda, nombre);
+    }
+    return raiz;
+}
+
+void imprimir_arbol(Nodo *raiz) {
+    if (raiz == NULL) {
+        return;
+    }
+    imprimir_arbol(raiz->izquierda);
+    printf("%s\n", raiz->nombre);
+    imprimir_arbol(raiz->derecha);
+}
+
+
+int main() {
+      // Crear árbol vacío
+    Nodo *raiz = NULL;
+
+    // Agregar nodos al árbol
+    raiz = agregar_nodo(raiz, "Matemáticas");
+    raiz = agregar_nodo(raiz, "Física");
+    raiz = agregar_nodo(raiz, "Química");
+    raiz = agregar_nodo(raiz, "Biología");
+
+    // Imprimir árbol
+    imprimir_arbol(raiz);
+    
+    // Crear listas vacías
+    Estudiante *estudiantes = NULL;
+    Materia *materias = NULL;
+
+    // Dar de alta estudiantes
+    alta_estudiante(&estudiantes, "Juan", 20);
+    alta_estudiante(&estudiantes, "Maria", 22);
+     alta_estudiante(&estudiantes, "Marcelo", 21);
+    alta_estudiante(&estudiantes, "Carla", 22);
+     alta_estudiante(&estudiantes, "Lucas", 23);
+    alta_estudiante(&estudiantes, "Milagros", 20);
+
+    // Dar de alta materias
+    alta_materia(&materias, "Matemáticas", 0);
+    alta_materia(&materias, "Física", 0);
+    alta_materia(&materias, "Biologia", 0);
+    alta_materia(&materias, "Algebra", 0);
+    alta_materia(&materias, "Programación", 0);
+    alta_materia(&materias, "Quimica", 0);
+   
+    // Anotar estudiantes en materias
+   printf("Los estudiantes se anotan a las materias:\n");
+    anotar_estudiante_materia(estudiantes, materias);
+    anotar_estudiante_materia(estudiantes->proximo, materias->proximo);
+    
+
+    // Rendir materias
+    printf("Lista de materias rendidas:\n");
+    rendir_materia(estudiantes, "Matemáticas", 8);
+    rendir_materia(estudiantes->proximo, "Biologia", 7);
+    rendir_materia(estudiantes, "Algebra", 10);
+    rendir_materia(estudiantes->proximo, "Física", 3);
+    rendir_materia(estudiantes, "Programacion", 8);
+    rendir_materia(estudiantes->proximo, "Quimica", 2);
+
+    // Listar estudiantes
+    printf("Lista de estudiantes:\n");
+    listar_estudiantes(estudiantes);
+
+    // Listar materias
+    printf("Lista de materias:\n");
+    listar_materias(materias);
+
+    // Buscar estudiante por nombre
+    printf("Buscando estudiante 'Juan':\n");
+    buscar_estudiante_nombre(estudiantes, "Juan");
+
+    // Buscar estudiantes por rango de edad
+    printf("Buscando estudiantes entre 20 y 25 años:\n");
+    buscar_estudiante_edad(estudiantes, 20, 25);
+
+    // Modificar estudiante
+    printf("Modificando edad de estudiante 'Juan' a 21:\n");
+    modificar_estudiante(estudiantes, "Juan", 21);
+
+    // Eliminar estudiante
+    printf("Eliminando estudiante 'Juan':\n");
+    eliminar_estudiante(&estudiantes, "Juan");
+
+    // Listar estudiantes
+    printf("Lista de estudiantes después de eliminar a 'Juan':\n");
+    listar_estudiantes(estudiantes);
+ 
+    // Verificar si se puede anotar en la materia ""
+     Materia *materia_desaprobada = materias->proximo;
+    materia_desaprobada->nota = 3; // Desaprobar la materia
+
+    Estudiante *estudiante = estudiantes->proximo;
+    if (puede_anotarse(estudiante, materia_desaprobada)) {
+        printf("El estudiante %s se puede anotar en la materia %s.\n", estudiante->nombre, materia_desaprobada->nombre);
+    } else {
+        printf("El estudiante %s no se puede anotar en la materia %s porque no aprobó la materia anterior.\n", estudiante->nombre, materia_desaprobada->nombre);
+    }
+    return 0;
+}
