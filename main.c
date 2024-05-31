@@ -32,15 +32,15 @@ int main(){
 
     //Anotarse en materias
     anotarseEnMateria(estudiante1,materia1);
-    anotarseEnMateria(estudiante2,materia3);
-    anotarseEnMateria(estudiante3,materia2);
+    anotarseEnMateria(estudiante1,materia2);
+    anotarseEnMateria(estudiante1,materia3);
 
     //Listar Materias
     ListaMaterias *listaMaterias = crearNuevaListaMaterias();
     agregarMateria(listaMaterias,materia1);
     agregarMateria(listaMaterias,materia2);
     agregarMateria(listaMaterias,materia3);
-    eliminarMateria(listaMaterias, 123);
+    //eliminarMateria(listaMaterias, 123);
 
     //ListaEstudiantes
     ListaEstudiante *listaEstudiante = crearListaEstudiantes();
@@ -48,7 +48,7 @@ int main(){
     agregarEstudiante(listaEstudiante, estudiante2);
     agregarEstudiante(listaEstudiante, estudiante3);
     eliminarEstudiante(listaEstudiante, 42046296);
-    ListaEstudiante *encontrados = buscarEstudiantesPorRangoEdad(listaEstudiante, inicio_busqueda, fin_busqueda);
+    //ListaEstudiante *encontrados = buscarEstudiantesPorRangoEdad(listaEstudiante, inicio_busqueda, fin_busqueda);
     //modificarListaEstudiante(listaEstudiante);
 
     //Metodos Materias
@@ -57,7 +57,6 @@ int main(){
 
     //SetNota - Estudiante
     imprimirListaMateriasEnCurso(estudiante1->listaEnCurso);
-
 }
 
 

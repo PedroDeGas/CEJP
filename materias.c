@@ -62,3 +62,9 @@ void modificarNombreMateriaGeneral(Materia *materia){
     printf("Cambio realizado con exito!\n");
     limpiarBuffer();
 }
+int obtenerIDMateria(Materia *materia){
+    return materia->id;
+}
+char* obtenerNombreMateria(Materia *materia){
+    return materia->nombre;
+}

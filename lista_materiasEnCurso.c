@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include "lista_materiasEnCurso.h"
+#include "nodo_materiaestudiante.h"
 
 listaMateriasEnCurso *crearNuevaListaMateriasEnCurso() {
     listaMateriasEnCurso *lista = malloc(sizeof(listaMateriasEnCurso));
@@ -12,16 +13,7 @@ listaMateriasEnCurso *crearNuevaListaMateriasEnCurso() {
     return lista;
 }
 
-void agregarMateriaEnCurso(listaMateriasEnCurso *lista, Materia *materia) {
-    NodoMateriaEstudiante *nuevoNodo = malloc(sizeof(NodoMateriaEstudiante));
-    if (nuevoNodo == NULL) {
-        printf("Error: sin memoria para agregar materia.\n");
-        return;
-    }
-
-    nuevoNodo->materia = materia;
-    nuevoNodo->proximo = NULL;
-
+void agregarMateriaEnCurso(listaMateriasEnCurso *lista, NodoMateriaEstudiante *nuevoNodo) {
     if (lista->head == NULL) {
         lista->head = nuevoNodo;
         lista->tail = nuevoNodo;
@@ -33,12 +25,15 @@ void agregarMateriaEnCurso(listaMateriasEnCurso *lista, Materia *materia) {
 }
 
 void imprimirListaMateriasEnCurso(listaMateriasEnCurso *lista) {
+    if (lista == NULL || lista->head == NULL) {
+        printf("Error: lista vacia\n");
+        return;
+    }
     NodoMateriaEstudiante *cursor = lista->head;
     while (cursor != NULL) {
-        printf("Materia: %s - ID: %d - Nota: %d\n", cursor->materia->nombre,cursor->materia->id, cursor->nota);
+        printf("%d | %s | Nota: %d\n", obtenerIDMateria(cursor->materia), obtenerNombreMateriaNodo(cursor), getNota(cursor));
         cursor = cursor->proximo;
     }
-    printf("\n");
 }
 
 void modificarNota(listaMateriasEnCurso *lista, int idMateria, int nota) {

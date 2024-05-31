@@ -8,5 +8,6 @@ typedef struct structNodoMateriaEstudiante {
 } NodoMateriaEstudiante;
 
 NodoMateriaEstudiante *crearNuevoNodoMateriaEstudiante(Materia *materia, int nota);
-
+int getNota(NodoMateriaEstudiante *nodo);
+char* obtenerNombreMateriaNodo(NodoMateriaEstudiante *nodo);
 #endif

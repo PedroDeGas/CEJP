@@ -9,4 +9,6 @@ void limpiarBuffer();
 Materia* crearMateria(char *nombre, int id);
 void modificarIDMateriaGeneral(Materia *materia);
 void modificarNombreMateriaGeneral(Materia *materia);
+char *obtenerNombreMateria(Materia *materia);
+int obtenerIDMateria(Materia *materia);
 #endif

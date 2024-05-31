@@ -9,7 +9,7 @@ typedef struct structlistaMateriasEnCurso {
 } listaMateriasEnCurso;
 
 listaMateriasEnCurso *crearNuevaListaMateriasEnCurso();
-void agregarMateriaEnCurso(listaMateriasEnCurso *lista, Materia *materia);
+void agregarMateriaEnCurso(listaMateriasEnCurso *lista, NodoMateriaEstudiante *nodo);
 void imprimirListaMateriasEnCurso(listaMateriasEnCurso *lista);
 void modificarNota(listaMateriasEnCurso *lista, int idMateria, int nota);
 
