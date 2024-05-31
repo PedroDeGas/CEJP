@@ -45,3 +45,10 @@
 2	69	7388167871554374	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
 8	77	7388167871638040	CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj	f21978fe6c57b5b1
 77	176	7388167872596718	Sistema.exe	95b10c78c4dd5c07
+8	274	7388786293511780	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
+2	278	7388786293556848	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+278	604	7388786296771177	Sistema.exe	95b10c78c4dd5c07
+3	70	7388786621096143	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+71	166	7388786622030396	Sistema.exe	95b10c78c4dd5c07
+3	87	7388786843119418	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
+87	180	7388786844007663	Sistema.exe	95b10c78c4dd5c07

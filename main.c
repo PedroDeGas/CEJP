@@ -56,6 +56,7 @@ int main(){
     //modificarNombreMateriaGeneral(materia2);
 
     //SetNota - Estudiante
+    setNota(estudiante1);
     imprimirListaMateriasEnCurso(estudiante1->listaEnCurso);
 }
 

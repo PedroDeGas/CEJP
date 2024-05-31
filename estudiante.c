@@ -131,11 +131,19 @@ void setNota(Estudiante *estudiante) {
     imprimirListaMateriasEnCurso(estudiante->listaEnCurso);
 
     int opcion;
-    printf("Seleccione la materia a la que desea asignar la nota: ");
+    printf("Seleccione el id de la materia a la que desea asignar la nota: ");
     scanf("%d", &opcion);
 
     NodoMateriaEstudiante *cursor = estudiante->listaEnCurso->head;
-    for (int i = 1; i < opcion && cursor != NULL; i++) {
+    while(cursor != NULL){
+        if (cursor->materia->id == opcion){
+            int nuevaNota;
+            printf("Ingrese la nueva nota para la materia %s: \n", cursor->materia->nombre);
+            scanf("%d", &nuevaNota);
+            cursor->nota = nuevaNota;
+            printf("Nota actualizada correctamente para la materia %s.\n", cursor->materia->nombre);
+            return;
+        }
         cursor = cursor->proximo;
     }
 
@@ -143,12 +151,4 @@ void setNota(Estudiante *estudiante) {
         printf("Error: Materia no encontrada.\n");
         return;
     }
-
-    int nuevaNota;
-    printf("Ingrese la nueva nota para la materia %s: ", cursor->materia->nombre);
-    scanf("%d", &nuevaNota);
-
-    cursor->nota = nuevaNota;
-
-    printf("Nota actualizada correctamente para la materia %s.\n", cursor->materia->nombre);
 }
