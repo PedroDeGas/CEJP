@@ -4,7 +4,9 @@
 
 NodoEstudiante *crearNuevoNodoEstudiante(Estudiante *estudiante) {
     NodoEstudiante *nuevoNodo = malloc(sizeof(NodoEstudiante));
-    nuevoNodo->estudiante = estudiante;
-    nuevoNodo->proximo = NULL;
+    if (nuevoNodo != NULL) {
+        nuevoNodo->estudiante = estudiante;
+        nuevoNodo->proximo = NULL;
+    }
     return nuevoNodo;
 }

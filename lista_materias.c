@@ -52,34 +52,46 @@ void imprimirMaterias(ListaMaterias *lista) {
     printf("\n");
 }
 
-void eliminarMateria(ListaMaterias *lista, int id) {
-    if (lista == NULL) {
-        printf("La lista no puede ser nula.\n");
+void eliminarMateriaListaGeneral(ListaMaterias *lista_materias, ListaEstudiante *lista_estudiantes, Materia *materia) {
+    if (lista_materias == NULL || lista_materias->head == NULL) {
+        printf("Error: Lista de materias vacía o no inicializada.\n");
         return;
     }
-    NodoMateria *cursor = lista->head;
-    NodoMateria *anterior = NULL;
+
+    NodoEstudiante *nodo_estudiante = lista_estudiantes->head;
+    while (nodo_estudiante != NULL) {
+        eliminarMateriaEnCurso(nodo_estudiante->estudiante->listaEnCurso, materia);
+        nodo_estudiante = nodo_estudiante->proximo;
+    }
+
+    NodoMateria *cursor = lista_materias->head;
+    NodoMateria *anterior_materia = NULL;
 
     while (cursor != NULL) {
-        if (cursor->materia->id == id) {
-            if (anterior == NULL) {
-                lista->head = cursor->proximo;
+        if (obtenerIDMateria(cursor->materia) == materia->id) {
+            if (anterior_materia == NULL) {
+                lista_materias->head = cursor->proximo;
+                if (cursor == lista_materias->tail) {
+                    lista_materias->tail = NULL;
+                }
             } else {
-                anterior->proximo = cursor->proximo;
-            }
-            if (cursor->proximo == NULL) {
-                lista->tail = anterior;
+                anterior_materia->proximo = cursor->proximo;
+                if (cursor == lista_materias->tail) {
+                    lista_materias->tail = anterior_materia;
+                }
             }
             free(cursor->materia);
             free(cursor);
-            printf("Materia con ID %d eliminada.\n", id);
+            lista_materias->size--;
             return;
         }
-        anterior = cursor;
+        anterior_materia = cursor;
         cursor = cursor->proximo;
     }
-    printf("No se encontro materia con ID %d.\n", id);
+
+    printf("Materia con ID %d no encontrada en la lista general.\n", materia->id);
 }
+
 Materia *buscarMateriaPorNombre(ListaMaterias *lista, char *nombre) {
     if (lista == NULL || nombre == NULL) {
         printf("La lista o el nombre no pueden ser nulos.\n");
