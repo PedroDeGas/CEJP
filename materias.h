@@ -3,6 +3,7 @@
 typedef struct MateriaStruct {
     char *nombre;
     int id;
+    int id_correlativas[5];
 } Materia;
 
 void limpiarBuffer();
@@ -12,4 +13,5 @@ void modificarNombreMateriaGeneral(Materia *materia);
 char *obtenerNombreMateria(Materia *materia);
 int obtenerIDMateria(Materia *materia);
 void imprimirDatosMateria(Materia *materia);
+void agregarCorrelativas(Materia *materia,Materia *correlativa);
 #endif

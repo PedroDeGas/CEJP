@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include "lista_estudiantes.h"
 #include <time.h>
+#include "string.h"
 #include "lista_materias.h"
 
 ListaEstudiante *crearListaEstudiantes(){
@@ -82,7 +83,7 @@ Estudiante *buscarEstudiantePorNombre(ListaEstudiante *lista, char *nombre) {
     }
     NodoEstudiante *actual = lista->head;
     while (actual != NULL) {
-        if (actual->estudiante->nombre == nombre) {
+        if (strcmp(actual->estudiante->nombre,nombre) == 0) {
             return actual->estudiante;
         }
         actual = actual->proximo;

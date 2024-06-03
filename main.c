@@ -46,11 +46,16 @@ int main() {
     agregarMateria(lista_materias,materia4);
     agregarMateria(lista_materias,materia5);
 
+    agregarCorrelativas(materia1,materia2);
+    agregarCorrelativas(materia2,materia3);
+    agregarCorrelativas(materia1,materia4);
+
     anotarseEnMateria(estudiante1,materia1);
     anotarseEnMateria(estudiante2,materia1);
     anotarseEnMateria(estudiante2,materia2);
     anotarseEnMateria(estudiante3,materia1);
     anotarseEnMateria(estudiante3,materia2);
+
 
     do {
         printf("\n---- MENU ----\n");
@@ -175,20 +180,25 @@ int main() {
             }
             case 8: {
                 int opcion_busqueda;
-                do {
                     printf("Ingrese su opcion: \n");
                     printf("1. Buscar por DNI:\n");
                     printf("2. Buscar por nombre:\n");
                     printf("3. Volver al menu principal:\n");
+                    scanf("%d",&opcion_busqueda);
                     switch (opcion_busqueda) {
                         case 1:{
                             int dni;
                             printf("Ingrese el numero de DNI del estudiante a buscar: \n");
                             scanf("%d", &dni);
-                            Estudiante *buscado = buscarEstudiantePorDNI(lista_estudiantes,dni);
+                            imprimirDatosEstudiante(buscarEstudiantePorDNI(lista_estudiantes,dni));
                             break;
                         }
                         case 2:{
+                            printf("Ingrese el nombre para el estudiante: ");
+                            char nombre[100];
+
+                            scanf("%s", nombre);
+                            imprimirDatosEstudiante(buscarEstudiantePorNombre(lista_estudiantes,nombre));
                             break;
                         }
                         case 3:{
@@ -196,7 +206,6 @@ int main() {
                             break;
                         }
                     }
-                } while (opcion_busqueda != 3);
                 break;
             }
             case 9: {

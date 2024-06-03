@@ -102,6 +102,10 @@ void anotarseEnMateria(Estudiante *estudiante, Materia *materia) {
         }
     }
 
+    for (int i = 0; i < sizeof(materia->id_correlativas)/(sizeof(int)) ; ++i) {
+
+    }
+
     NodoMateriaEstudiante *nuevoNodo = crearNuevoNodoMateriaEstudiante(materia, -1);
     if (nuevoNodo == NULL) {
         printf("Error: No se pudo crear el nodo para la materia en curso.\n");

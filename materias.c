@@ -12,7 +12,11 @@ Materia* crearMateria(char *nombre, int id){
     Materia *nuevaMateria = malloc(sizeof(Materia));
     nuevaMateria->nombre = nombre;
     nuevaMateria->id = id;
-
+    nuevaMateria->id_correlativas[0] = -1;
+    nuevaMateria->id_correlativas[1] = -1;
+    nuevaMateria->id_correlativas[2] = -1;
+    nuevaMateria->id_correlativas[3] = -1;
+    nuevaMateria->id_correlativas[4] = -1;
     return nuevaMateria;
 }
 
@@ -62,4 +66,18 @@ void imprimirDatosMateria(Materia *materia){
         return;
     }
     printf("ID: %d | Nombre: %s \n", materia->id, materia->nombre);
+}
+void agregarCorrelativas(Materia *materia, Materia *correlativa){
+    if(materia == NULL || correlativa == NULL){
+        printf("Materia nula");
+        return;
+    }
+
+    for (int i = 0; i < sizeof(materia->id_correlativas)/(sizeof(int)) ; ++i) {
+        if(materia->id_correlativas[i] == -1){
+            materia->id_correlativas[i] = correlativa->id;
+            return;
+        }
+    }
+    printf("Ya se ocuparon las correlativas\n");
 }
