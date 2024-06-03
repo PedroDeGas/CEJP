@@ -4,72 +4,117 @@
 #include "lista_materias.h"
 #include <stdio.h>
 #include "lista_estudiantes.h"
+#include "malloc.h"
+#include "string.h"
 
-int main(){
-    //Creacion Materias
-    Materia *materia1 = crearMateria("Lengua", 123);
-    Materia *materia2 = crearMateria("Biologia", 124);
-    Materia *materia3 = crearMateria("Fisica", 125);
+Estudiante *crearEstudianteMenu(){
 
-    //Creacion Fechas
-    Fecha *fecha1 = crearFecha(29,5,1990);
-    Fecha *fecha2 = crearFecha(13,11,1992);
-    Fecha *fecha3 = crearFecha(1,10,2000);
-    Fecha *inicio_busqueda = crearFecha(1,1,1900);
-    Fecha *fin_busqueda = crearFecha(12,12,1994);
-    Fecha *actual = obtenerFechaActual();
+    Estudiante *creado = crearEstudiante(NULL,-1,NULL);
+    asignarNombre(creado);
 
-    //Calcular Edades
-    Fecha* edad1 = calcularEdad(fecha1);
-    Fecha* edad2 = calcularEdad(fecha2);
-    Fecha* edad3 = calcularEdad(fecha3);
-    printf("Edad: %d d - %d m - %d a \n", edad1->dia,edad1->mes,edad1->anio);
+    asignarDNI(creado);
+    asignarFechaDeNacimiento(creado);
 
-    //Creacion Estudiantes
-    Estudiante *estudiante1 = crearEstudiante("Juan",42046296,fecha1);
-    Estudiante *estudiante2 = crearEstudiante("Pedro",22240495,fecha2);
-    Estudiante *estudiante3 = crearEstudiante("Ramon",1192375,fecha3);
-
-    //Anotarse en materias
-    anotarseEnMateria(estudiante1,materia1);
-    anotarseEnMateria(estudiante1,materia2);
-    anotarseEnMateria(estudiante1,materia3);
-    anotarseEnMateria(estudiante2,materia1);
-    anotarseEnMateria(estudiante2,materia2);
-    anotarseEnMateria(estudiante3,materia1);
-
-    //Listar Materias
-    ListaMaterias *listaMaterias = crearNuevaListaMaterias();
-    agregarMateria(listaMaterias,materia1);
-    agregarMateria(listaMaterias,materia2);
-    agregarMateria(listaMaterias,materia3);
-    //eliminarMateria(listaMaterias, 123);
-
-    //ListaEstudiantes
-    ListaEstudiante *listaEstudiante = crearListaEstudiantes();
-    agregarEstudiante(listaEstudiante, estudiante1);
-    agregarEstudiante(listaEstudiante, estudiante2);
-    agregarEstudiante(listaEstudiante, estudiante3);
-    //eliminarEstudiante(listaEstudiante, 42046296);
-    //ListaEstudiante *encontrados = buscarEstudiantesPorRangoEdad(listaEstudiante, inicio_busqueda, fin_busqueda);
-    //modificarListaEstudiante(listaEstudiante);
-
-    //Metodos Materias
-    //modificarIDMateriaGeneral(materia2);
-    //modificarNombreMateriaGeneral(materia2);
-
-    //SetNota - Estudiante
-    //setNota(estudiante1);
-    //imprimirListaMateriasEnCurso(estudiante1->listaEnCurso);
-
-    //Eliminar materia en curso
-    //eliminarMateriaEnCurso(estudiante1->listaEnCurso,materia2);
-    //imprimirListaMateriasEnCurso(estudiante1->listaEnCurso);
-
-    //Eliminar materia lista general
-    eliminarMateriaEnCurso(estudiante1->listaEnCurso,materia1);
-    //eliminarMateriaListaGeneral(listaMaterias,listaEstudiante,materia1);
-    imprimirListaMateriasEnCurso(estudiante1->listaEnCurso);
+    return creado;
 }
 
+int main() {
+    int opcion;
+    Fecha *fecha = crearFecha(12,12,1999);
+    ListaEstudiante *lista_estudiantes = crearListaEstudiantes();
+
+    do {
+        printf("\n---- MENU ----\n");
+        printf("1. Crear estudiante\n");
+        printf("2. Modificar estudiante\n");
+        printf("3. Eliminar estudiante\n");
+        printf("4. Mostrar estudiantes disponibles\n");
+        printf("5. Buscar estudiante: \n");
+        printf("6. Seleccionar estudiante\n");
+        printf("7. Salir\n");
+        printf("Seleccione una opcion: \n");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1: { //Cuando se guarda el estudiante, el nombre se imprime mal (algun problema de punteros?)
+                Estudiante *creado = crearEstudianteMenu();
+                if (creado->fechaNacimiento == NULL){
+                    break;
+                }
+                agregarEstudiante(lista_estudiantes,creado);
+                break;
+            }
+            case 2: {
+                imprimirListaEstudiantes(lista_estudiantes);
+                if (lista_estudiantes->head == NULL){
+                    break;
+                }
+                int dni;
+                printf("Seleccione el DNI del estudiante a modificar: \n");
+                scanf("%d", &dni);
+                Estudiante *buscado = buscarEstudiantePorDNI(lista_estudiantes,dni);
+                if(buscado == NULL){
+                    break;
+                }
+                modificarEstudiante(buscado);
+                break;
+            }
+            case 3: {
+                imprimirListaEstudiantes(lista_estudiantes);
+                if (lista_estudiantes->head == NULL){
+                    break;
+                }
+
+                printf("Ingrese el dni del estudiante que desea eliminar: \n");
+                int dni;
+                scanf("%d", &dni);
+
+                Estudiante *estudiante = buscarEstudiantePorDNI(lista_estudiantes,dni);
+
+                if (estudiante == NULL){
+                    break;
+                }
+
+                eliminarEstudiante(lista_estudiantes,dni);
+                break;
+            }
+            case 4: {
+                int opcion_busqueda;
+                do {
+                    printf("Ingrese su opcion: \n");
+                    printf("1. Buscar por DNI:\n");
+                    printf("2. Buscar por nombre:\n");
+                    printf("3. Volver al menu principal:\n");
+                    switch (opcion_busqueda) {
+                        case 1:{
+                            int dni;
+                            printf("Ingrese el numero de DNI del estudiante a buscar: \n");
+                            scanf("%d", &dni);
+                            Estudiante *buscado = buscarEstudiantePorDNI(lista_estudiantes,dni);
+                            break;
+                        }
+                        case 2:{
+                            break;
+                        }
+                        case 3:{
+                            printf("Volviendo al menu principal: \n");
+                            break;
+                        }
+                    }
+                } while (opcion_busqueda != 3);
+            }
+            case 5: {
+
+            }
+            case 6: {
+
+            }
+            case 7: {
+                printf("Saliendo del programa...");
+                break;
+            }
+        }
+    } while (opcion != 7);
+    return 0;
+}
 

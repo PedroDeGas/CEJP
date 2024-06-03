@@ -12,11 +12,11 @@ typedef struct Estudiante {
 } Estudiante;
 
 Estudiante *crearEstudiante(char *nombre, int dni, Fecha *fechaNacimiento);
-void modificarNombre(Estudiante *estudiante);
-void modificarDNI(Estudiante *estudiante);
-void modificarFechaNacimiento(Estudiante *estudiante);
+void asignarNombre(Estudiante *estudiante);
+void asignarDNI(Estudiante *estudiante);
+void asignarFechaDeNacimiento(Estudiante *estudiante);
 void modificarEstudiante(Estudiante *estudiante);
 void anotarseEnMateria(Estudiante *estudiante, Materia *materia);
 void setNota(Estudiante *estudiante);
-
+void imprimirDatosEstudiante(Estudiante *estudiante);
 #endif

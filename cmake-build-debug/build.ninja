@@ -109,6 +109,12 @@ build CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj: C_COMPILER__Sistema_u
   OBJECT_DIR = CMakeFiles\Sistema.dir
   OBJECT_FILE_DIR = CMakeFiles\Sistema.dir
 
+build CMakeFiles/Sistema.dir/arboldecorrelatividad.c.obj: C_COMPILER__Sistema_unscanned_Debug C$:/Users/Juampi/Desktop/Untref/AYP3/AYP3/Sistema/arboldecorrelatividad.c || cmake_object_order_depends_target_Sistema
+  DEP_FILE = CMakeFiles\Sistema.dir\arboldecorrelatividad.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Sistema.dir
+  OBJECT_FILE_DIR = CMakeFiles\Sistema.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Sistema
@@ -117,7 +123,7 @@ build CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj: C_COMPILER__Sistema_u
 #############################################
 # Link the executable Sistema.exe
 
-build Sistema.exe: C_EXECUTABLE_LINKER__Sistema_Debug CMakeFiles/Sistema.dir/main.c.obj CMakeFiles/Sistema.dir/estudiante.c.obj CMakeFiles/Sistema.dir/fechas.c.obj CMakeFiles/Sistema.dir/lista_estudiantes.c.obj CMakeFiles/Sistema.dir/lista_materias.c.obj CMakeFiles/Sistema.dir/lista_materiasEnCurso.c.obj CMakeFiles/Sistema.dir/materias.c.obj CMakeFiles/Sistema.dir/nodo_estudiante.c.obj CMakeFiles/Sistema.dir/nodo_materia.c.obj CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj
+build Sistema.exe: C_EXECUTABLE_LINKER__Sistema_Debug CMakeFiles/Sistema.dir/main.c.obj CMakeFiles/Sistema.dir/estudiante.c.obj CMakeFiles/Sistema.dir/fechas.c.obj CMakeFiles/Sistema.dir/lista_estudiantes.c.obj CMakeFiles/Sistema.dir/lista_materias.c.obj CMakeFiles/Sistema.dir/lista_materiasEnCurso.c.obj CMakeFiles/Sistema.dir/materias.c.obj CMakeFiles/Sistema.dir/nodo_estudiante.c.obj CMakeFiles/Sistema.dir/nodo_materia.c.obj CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj CMakeFiles/Sistema.dir/arboldecorrelatividad.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Sistema.dir

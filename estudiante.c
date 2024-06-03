@@ -16,16 +16,11 @@ Estudiante *crearEstudiante(char *nombre, int dni, Fecha *fechaNacimiento){
     return nuevoEstudiante;
 }
 
-void modificarNombre(Estudiante *estudiante) {
-    printf("Ingrese el nuevo nombre para el estudiante: ");
+void asignarNombre(Estudiante *estudiante) {
+    printf("Ingrese el nombre para el estudiante: ");
     char nuevoNombre[100];
 
-    fgets(nuevoNombre, sizeof(nuevoNombre), stdin);
-
-    size_t len = strlen(nuevoNombre);
-    if (len > 0 && nuevoNombre[len - 1] == '\n') {
-        nuevoNombre[len - 1] = '\0';
-    }
+    scanf("%s", nuevoNombre);
 
     estudiante->nombre = malloc(strlen(nuevoNombre) + 1);
     if (estudiante->nombre == NULL) {
@@ -34,16 +29,16 @@ void modificarNombre(Estudiante *estudiante) {
     }
     strcpy(estudiante->nombre, nuevoNombre);
 
-    printf("Nuevo nombre del estudiante: %s\n", estudiante->nombre);
+    printf("Nombre del estudiante: %s\n", estudiante->nombre);
 }
 
-void modificarDNI(Estudiante *estudiante) {
-    printf("Ingrese el nuevo DNI: ");
+void asignarDNI(Estudiante *estudiante) {
+    printf("Ingrese el DNI: ");
     scanf("%d", &estudiante->dni);
-    printf("Nuevo DNI: %d\n", estudiante->dni);
+    printf("DNI: %d\n", estudiante->dni);
 }
 
-void modificarFechaNacimiento(Estudiante *estudiante) {
+void asignarFechaDeNacimiento(Estudiante *estudiante) {
     int dia, mes, anio;
     printf("Ingrese el nuevo dia de nacimiento: ");
     scanf("%d", &dia);
@@ -76,13 +71,13 @@ void modificarEstudiante(Estudiante *estudiante) {
 
         switch (opcion) {
             case 1:
-                modificarNombre(estudiante);
+                asignarNombre(estudiante);
                 break;
             case 2:
-                modificarDNI(estudiante);
+                asignarDNI(estudiante);
                 break;
             case 3:
-                modificarFechaNacimiento(estudiante);
+                asignarFechaDeNacimiento(estudiante);
                 break;
             case 4:
                 printf("Saliendo del menu...\n");
@@ -151,4 +146,25 @@ void setNota(Estudiante *estudiante) {
         printf("Error: Materia no encontrada.\n");
         return;
     }
+}
+void imprimirDatosEstudiante(Estudiante *estudiante){
+    if (estudiante == NULL) {
+        printf("Estudiante no encontrado.\n");
+        return;
+    }
+    printf("Nombre: %s - DNI: %d - Fecha de nacimiento: %d/%d/%d\n",
+           estudiante->nombre,
+           estudiante->dni,
+           estudiante->fechaNacimiento->dia,
+           estudiante->fechaNacimiento->mes,
+           estudiante->fechaNacimiento->anio);
+
+    printf("Lista de materias en curso:\n");
+    NodoMateriaEstudiante *cursor = estudiante->listaEnCurso->head;
+    while (cursor != NULL) {
+        imprimirDatosMateria(cursor->materia);
+        printf("---Nota: %d---\n", cursor->nota);
+        cursor = cursor->proximo;
+    }
+
 }

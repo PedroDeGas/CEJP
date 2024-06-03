@@ -29,7 +29,7 @@ void agregarEstudiante(ListaEstudiante *lista,Estudiante *estudiante) {
         lista->tail = nuevoNodo;
     }
 
-    printf("Estudiante %d agregado\n", estudiante->dni);
+    printf("Estudiante con DNI: %d agregado\n", estudiante->dni);
 }
 void eliminarEstudiante(ListaEstudiante *lista, int dni) {
     if (lista == NULL || lista->head == NULL) {
@@ -88,7 +88,7 @@ Estudiante *buscarEstudiantePorDNI(ListaEstudiante *lista, int dni) {
         actual = actual->proximo;
     }
 
-    printf("Estudiante con ID %d no encontrado.\n", dni);
+    printf("Estudiante con DNI %d no encontrado.\n", dni);
     return NULL;
 }
 
@@ -169,13 +169,13 @@ void modificarListaEstudiante(ListaEstudiante *lista) {
                 while (getchar() != '\n');
                 switch (opcion) {
                     case 1:
-                        modificarNombre(actual->estudiante);
+                        asignarNombre(actual->estudiante);
                         break;
                     case 2:
-                        modificarDNI(actual->estudiante);
+                        asignarDNI(actual->estudiante);
                         break;
                     case 3:
-                        modificarFechaNacimiento(actual->estudiante);
+                        asignarFechaDeNacimiento(actual->estudiante);
                         break;
                     case 4:
                         printf("Lista de las materias que se pueden modificar (nota:)\n");

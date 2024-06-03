@@ -11,4 +11,5 @@ void modificarIDMateriaGeneral(Materia *materia);
 void modificarNombreMateriaGeneral(Materia *materia);
 char *obtenerNombreMateria(Materia *materia);
 int obtenerIDMateria(Materia *materia);
+void imprimirDatosMateria(Materia *materia);
 #endif

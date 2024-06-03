@@ -12,4 +12,5 @@ add_executable(Sistema main.c
         materias.c
         nodo_estudiante.c
         nodo_materia.c
-        nodo_materiaestudiante.c)
+        nodo_materiaestudiante.c
+        arboldecorrelatividad.c)

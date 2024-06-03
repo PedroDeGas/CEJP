@@ -68,3 +68,10 @@ int obtenerIDMateria(Materia *materia){
 char* obtenerNombreMateria(Materia *materia){
     return materia->nombre;
 }
+void imprimirDatosMateria(Materia *materia){
+    if (materia == NULL) {
+        printf("Materia no encontrada.\n");
+        return;
+    }
+    printf("ID: %d | Nombre: %s | Nota: %d\n", materia->id, materia->nombre);
+}
