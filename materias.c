@@ -13,7 +13,6 @@ Materia* crearMateria(char *nombre, int id){
     nuevaMateria->nombre = nombre;
     nuevaMateria->id = id;
 
-    printf("Materia %s con id: %d \n",nombre,id);
     return nuevaMateria;
 }
 
@@ -29,37 +28,26 @@ void modificarIDMateriaGeneral(Materia *materia){
 
     if (nuevo_id < 0 || nuevo_id> 99){
         printf("Error: fuera de rango\n");
+        return;
     }
     materia->id = nuevo_id;
 
-    printf("Cambio exitoso!\n");
     limpiarBuffer();
 }
 
 void modificarNombreMateriaGeneral(Materia *materia){
-    if (materia == NULL){
-        printf("Error: Materia nula\n");
-        return;
-    }
-
-    printf("Ingrese el nuevo nombre para la materia: ");
+    printf("Ingrese el nombre para la materia: ");
     char nuevoNombre[100];
 
-    fgets(nuevoNombre, sizeof(nuevoNombre), stdin);
-
-    size_t len = strlen(nuevoNombre);
-    if (len > 0 && nuevoNombre[len - 1] == '\n') {
-        nuevoNombre[len - 1] = '\0';
-    }
+    scanf("%s", nuevoNombre);
 
     materia->nombre = malloc(strlen(nuevoNombre) + 1);
     if (materia->nombre == NULL) {
-        printf("Error: Sin memoria para almacenar el nuevo nombre.\n");
+        printf("Error: sin memoria para almacenar el nuevo nombre.\n");
         return;
     }
     strcpy(materia->nombre, nuevoNombre);
 
-    printf("Cambio realizado con exito!\n");
     limpiarBuffer();
 }
 int obtenerIDMateria(Materia *materia){
@@ -73,5 +61,5 @@ void imprimirDatosMateria(Materia *materia){
         printf("Materia no encontrada.\n");
         return;
     }
-    printf("ID: %d | Nombre: %s | Nota: %d\n", materia->id, materia->nombre);
+    printf("ID: %d | Nombre: %s \n", materia->id, materia->nombre);
 }

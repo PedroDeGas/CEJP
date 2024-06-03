@@ -8,7 +8,7 @@ typedef struct structListaEstudiantes {
 } ListaEstudiante;
 
 ListaEstudiante *crearListaEstudiantes();
-void agregarEstudiante(ListaEstudiante *lista, Estudiante *estudiante);
+void agregarEstudiante(ListaEstudiante *lista, NodoEstudiante *estudiante);
 void eliminarEstudiante(ListaEstudiante *lista, int dni);
 void modificarListaEstudiante(ListaEstudiante *lista);
 void imprimirListaEstudiantes(ListaEstudiante *lista);

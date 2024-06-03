@@ -11,56 +11,38 @@ ListaEstudiante *crearListaEstudiantes(){
     return lista;
 }
 
-void agregarEstudiante(ListaEstudiante *lista,Estudiante *estudiante) {
-    NodoEstudiante *nuevoNodo = malloc(sizeof(NodoEstudiante));
-    if (nuevoNodo == NULL) {
-        printf("Error: Sin memoria para almacenar el nuevo estudiante\n");
-        return;
+void agregarEstudiante(ListaEstudiante *lista,NodoEstudiante *nodo) {
+    if (lista->head == NULL){
+        printf("\nAgregado a lista vacia");
+        lista->head = nodo;
+        lista->tail = nodo;
+    }else {
+        printf("\nAgregado al final de la lista");
+        nodo->prev = lista->tail;
+        lista->tail = nodo;
+        lista->tail->prev->proximo = lista->tail;
+        printf("\nAnteultimo: %d, Ultimo: %d", lista->tail->prev->estudiante->dni, lista->tail->estudiante->dni);
     }
-
-    nuevoNodo->estudiante = estudiante;
-    nuevoNodo->proximo = NULL;
-
-    if (lista->head == NULL) {
-        lista->head = nuevoNodo;
-        lista->tail = nuevoNodo;
-    } else {
-        lista->tail->proximo = nuevoNodo;
-        lista->tail = nuevoNodo;
-    }
-
-    printf("Estudiante con DNI: %d agregado\n", estudiante->dni);
+    printf("\nEstudiante -%d- agregado", lista->tail->estudiante->dni);
 }
-void eliminarEstudiante(ListaEstudiante *lista, int dni) {
-    if (lista == NULL || lista->head == NULL) {
-        printf("Lista vacia.\n");
-        return;
-    }
 
-    if (lista->head->estudiante->dni == dni) {
-        NodoEstudiante *temp = lista->head;
+void eliminarEstudiante(ListaEstudiante *lista, int dni){
+    if (lista->head->estudiante->dni == dni){
         lista->head = lista->head->proximo;
-        free(temp);
-        printf("Estudiante con DNI %d eliminado de la lista.\n", dni);
         return;
     }
-    NodoEstudiante *anterior = lista->head;
-    NodoEstudiante *actual = anterior->proximo;
-    while (actual != NULL) {
-        if (actual->estudiante->dni == dni) {
-            anterior->proximo = actual->proximo;
-            if (actual == lista->tail) {
-                lista->tail = anterior;
-            }
-            free(actual);
-            printf("Estudiante con DNI %d eliminado de la lista.\n", dni);
-            return;
-        }
-        anterior = actual;
-        actual = actual->proximo;
+    else if (lista->tail->estudiante->dni == dni){
+        lista->tail = lista->tail->prev;
+        lista->tail->proximo = NULL;
+        return;
     }
-
-    printf("Estudiante con DNI %d no encontrado en la lista.\n", dni);
+    NodoEstudiante *current = lista->head;
+    while (current->proximo != NULL && current->estudiante->dni != dni){
+        current = current->proximo;
+    }
+    NodoEstudiante *aux = current;
+    current->prev->proximo = current->proximo;
+    free(aux);
 }
 void imprimirListaEstudiantes(ListaEstudiante *lista) {
     if (lista == NULL || lista->head == NULL) {
@@ -71,6 +53,7 @@ void imprimirListaEstudiantes(ListaEstudiante *lista) {
     printf("Lista de estudiantes:\n");
     while (actual != NULL) {
         printf("Nombre: %s - DNI: %d - Fecha de nacimiento: %d/%d/%d\n", actual->estudiante->nombre, actual->estudiante->dni, actual->estudiante->fechaNacimiento->dia,actual->estudiante->fechaNacimiento->mes,actual->estudiante->fechaNacimiento->anio);
+        imprimirListaMateriasEnCurso(actual->estudiante->listaEnCurso);
         actual = actual->proximo;
     }
 }
