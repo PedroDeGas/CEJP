@@ -61,12 +61,10 @@ int main() {
     agregarMateria(lista_materias,materia9);
     agregarMateria(lista_materias,materia10);
 
-    /*
-    anotarseEnMateria(estudiante1,materia2);
+    anotarseEnMateria(estudiante1,materia1);
     anotarseEnMateria(estudiante1,materia3);
     anotarseEnMateria(estudiante1,materia4);
     anotarseEnMateria(estudiante1,materia1);
-    */
 
     agregarCorrelativas(materia3,materia2);
     agregarCorrelativas(materia3,materia1);
@@ -85,7 +83,8 @@ int main() {
         printf("8. Buscar estudiante\n");
         printf("9. Anotar a materia\n");
         printf("10. Rendir materia\n");
-        printf("11. Salir\n");
+        printf("11. Exportar a CSV\n");
+        printf("12. Salir\n");
         printf("Seleccione una opcion: \n");
         scanf("%d", &opcion);
 
@@ -276,10 +275,14 @@ int main() {
                 break;
             }
             case 11: {
+                printf("Exportando a CSV...\n");
+                exportarACSV(lista_estudiantes,"estudiantes.csv");
+                break;
+            }
+            case 12: {
                 printf("Saliendo del programa...\n");
             }
         }
-    } while (opcion != 11);
+    } while (opcion != 12);
     return 0;
 }
-

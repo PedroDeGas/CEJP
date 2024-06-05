@@ -207,3 +207,47 @@ void imprimirListaEstudiantesPaginada(ListaEstudiante *lista){
     }
     printf("[--------------------------------]\n");
 }
+void exportarACSV(ListaEstudiante *lista, char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (file == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    NodoEstudiante *current = lista->head;
+    fprintf(file,"Nombre,DNI,*En curso\n");
+    while (current != NULL) {
+        NodoMateriaEstudiante *encurso = current->estudiante->listaEnCurso->head;
+        fprintf(file, "%s, %d", current->estudiante->nombre, current->estudiante->dni);
+
+        while(encurso != NULL){
+            fprintf(file,"%d,", encurso->materia->id);
+            encurso = encurso->proximo;
+        }
+        fprintf(file,"\n");
+        current = current->proximo;
+    }
+
+    fclose(file);
+    printf("Datos exportados a %s con éxito.\n", filename);
+}
+/*
+void importarDesdeCSV(char *filename){
+    FILE* file = fopen(filename, "r");
+    if (file == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    ListaEstudiante *lista = crearListaEstudiantes();
+    int data;
+    char nombre[100];
+    int dni;
+    int m1,m2,m3,m4,m5;
+    while (fscanf(file, "%s,%d,%d,%d,%d,%d,%d", nombre,&dni,&m1,&m2,&m3,&m4,&m5) != EOF) {
+        agregarEstudiante(lista, crearNuevoNodoEstudiante(crearEstudiante(nombre,dni,NULL)));
+    }
+
+    fclose(file);
+    printf("Datos importados desde %s con éxito.\n", filename);
+}*/

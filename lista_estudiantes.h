@@ -16,5 +16,6 @@ Estudiante *buscarEstudiantePorDNI(ListaEstudiante *lista, int dni);
 Estudiante *buscarEstudiantePorNombre(ListaEstudiante *lista, char *nombre);
 ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista,int minimo, int max);
 void imprimirListaEstudiantesPaginada(ListaEstudiante *lista);
-
+void exportarACSV(ListaEstudiante * head, char* filename);
+void importarDesdeCSV(char *filename);
 #endif
