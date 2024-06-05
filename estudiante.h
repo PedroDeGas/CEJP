@@ -21,4 +21,5 @@ void setNota(Estudiante *estudiante);
 void imprimirDatosEstudiante(Estudiante *estudiante);
 void anotarseEnMateria(Estudiante *estudiante, Materia *materia);
 int puedeAnotarse(Estudiante *estudiante, Materia *materia);
+int estaCursando(Estudiante *estudiante, Materia *materia);
 #endif

@@ -176,7 +176,7 @@ void imprimirListaMateriasPaginada(ListaMaterias *lista) {
     while (actual != NULL) {
         if (contador == 5) {
             printf("[--------------------------------]\n");
-            printf("Presione Enter para continuar...\n");
+            printf("Presione alguna tecla para ver la siguiente pagina...");
             limpiarBuffer();
             getchar();
             contador = 0;

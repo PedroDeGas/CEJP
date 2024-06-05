@@ -92,7 +92,7 @@ Estudiante *buscarEstudiantePorNombre(ListaEstudiante *lista, char *nombre) {
     printf("Estudiante %s no encontrado.\n", nombre);
     return NULL;
 }
-ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista, Fecha *fecha_inicio, Fecha *fecha_fin) {
+ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista, int minimo, int max) {
     if (lista == NULL) {
         printf("La lista de estudiantes es nula.\n");
         return NULL;
@@ -106,14 +106,8 @@ ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista, Fecha *fe
 
     NodoEstudiante *cursor = lista->head;
     while (cursor != NULL) {
-        if (compararFechas(*cursor->estudiante->fechaNacimiento, *fecha_inicio) >= 0 &&
-            compararFechas(*cursor->estudiante->fechaNacimiento, *fecha_fin) <= 0) {
-
-            Estudiante *nuevo_estudiante = malloc(sizeof(Estudiante));
-            nuevo_estudiante->nombre = cursor->estudiante->nombre;
-            nuevo_estudiante->dni = cursor->estudiante->dni;
-            nuevo_estudiante->fechaNacimiento = cursor->estudiante->fechaNacimiento;
-            agregarEstudiante(estudiantes_en_rango, nuevo_estudiante);
+        if ((calcularEdad(cursor->estudiante->fechaNacimiento)->anio >= minimo) && (calcularEdad(cursor->estudiante->fechaNacimiento)->anio <= max)) {
+            agregarEstudiante(estudiantes_en_rango, cursor);
         }
 
         cursor = cursor->proximo;
@@ -205,7 +199,7 @@ void imprimirListaEstudiantesPaginada(ListaEstudiante *lista){
         //modificar esto segun la cantidad de elementos a mostrar
         if (contador == 5) {
             printf("[--------------------------------]\n");
-            printf("Presione enter para ver la siguiente pagina...");
+            printf("Presione alguna tecla para ver la siguiente pagina...");
             limpiarBuffer();
             getchar();
         }

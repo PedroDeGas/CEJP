@@ -94,14 +94,16 @@ void anotarseEnMateria(Estudiante *estudiante, Materia *materia) {
         return;
     }
 
-    if (estudiante->listaEnCurso == NULL) {
+    if (estudiante->listaEnCurso->head == NULL) {
         estudiante->listaEnCurso = crearNuevaListaMateriasEnCurso();
         if (estudiante->listaEnCurso == NULL) {
             printf("Error: No se pudo crear la lista de materias en curso.\n");
             return;
         }
     }
-    if (puedeAnotarse(estudiante, materia) == 0){
+    int puedeanotarse = puedeAnotarse(estudiante, materia);
+
+    if (puedeanotarse == 0 && estaCursando(estudiante,materia) != 0){
         NodoMateriaEstudiante *nuevoNodo = crearNuevoNodoMateriaEstudiante(materia, -1);
         if (nuevoNodo == NULL) {
             printf("Error: No se pudo crear el nodo para la materia en curso.\n");
@@ -113,20 +115,53 @@ void anotarseEnMateria(Estudiante *estudiante, Materia *materia) {
 }
 
 int puedeAnotarse(Estudiante *estudiante, Materia *materia){
-    NodoMateriaEstudiante *current = estudiante->listaEnCurso->head;
+    NodoMateriaEstudiante *current;
+    int aux = 0;
 
     for (int i = 0; i < sizeof(materia->id_correlativas)/(sizeof(int)) ; ++i) {
         if (materia->id_correlativas[i] == -1){
             return 0;
         }
-        while (current != NULL && current->materia->id != materia->id_correlativas[i]){
+        current = estudiante->listaEnCurso->head;
+        while(current != NULL){
+            printf("Nota: %d\n",current->nota);
+            printf("%s\n",current->materia->nombre);
+            printf("%d\n",materia->id_correlativas[i]);
+            if (materia->id_correlativas[i] == current->materia->id){
+                if (current->nota <= 4){
+                    printf("No se puede anotar debido a no haber aprobado la materia %d\n",materia->id_correlativas[i]);
+                    return -1;
+                }
+                aux = 1;
+            }
             current = current->proximo;
         }
-        printf("Materiasfdsf %d",current->materia->id);
-        if (current == NULL || current->nota <= 4){
-            printf("No se puede anotar %s a la materia, debido a la correlativa [%d]\n",estudiante->nombre,materia->id_correlativas[i]);
+        if (aux == 0){
+            printf("No se pudo anotar debido a no haber cursado la materia: %d\n", materia->id_correlativas[i]);
             return -1;
         }
+        aux = 0;
+    }
+
+    if (estudiante->listaEnCurso->head == NULL && materia->id_correlativas[0] == -1){
+        return 0;
+    }
+
+    return 0;
+}
+
+int estaCursando(Estudiante *estudiante, Materia *materia){
+    if (estudiante == NULL || materia == NULL){
+        return -1;
+    }
+
+    NodoMateriaEstudiante *current = estudiante->listaEnCurso->head;
+
+    while (current != NULL && current->materia->id != materia->id){
+        current = current->proximo;
+    }
+    if (current == NULL){
+        return -1;
     }
     return 0;
 }

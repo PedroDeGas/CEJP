@@ -14,7 +14,7 @@ void modificarListaEstudiante(ListaEstudiante *lista);
 void imprimirListaEstudiantes(ListaEstudiante *lista);
 Estudiante *buscarEstudiantePorDNI(ListaEstudiante *lista, int dni);
 Estudiante *buscarEstudiantePorNombre(ListaEstudiante *lista, char *nombre);
-ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista,Fecha *fecha_inicio, Fecha *fecha_fin);
+ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista,int minimo, int max);
 void imprimirListaEstudiantesPaginada(ListaEstudiante *lista);
 
 #endif

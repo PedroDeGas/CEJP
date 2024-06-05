@@ -21,10 +21,11 @@ Estudiante *crearEstudianteMenu(){
 int main() {
     int opcion;
     Fecha *fecha = crearFecha(12,12,1999);
+    Fecha *fecha2 = crearFecha(12,12,1920);
     ListaEstudiante *lista_estudiantes = crearListaEstudiantes();
     ListaMaterias *lista_materias = crearNuevaListaMaterias();
 
-    Materia *materia1 = crearMateria("matematica0",1);
+    Materia *materia1 = crearMateria("matematica",1);
     Materia *materia2 = crearMateria("lengua",2);
     Materia *materia3 = crearMateria("fisica",3);
     Materia *materia4 = crearMateria("quimica",4);
@@ -36,12 +37,11 @@ int main() {
     Materia *materia10 = crearMateria("datos",10);
 
     Estudiante *estudiante1 = crearEstudiante("pedro",1234,fecha);
-    Estudiante *estudiante2 = crearEstudiante("juan",124,fecha);
-    Estudiante *estudiante3 = crearEstudiante("daniel",1034,fecha);
-    Estudiante *estudiante4 = crearEstudiante("norber",1235,fecha);
+    Estudiante *estudiante2 = crearEstudiante("juan",124,fecha2);
+    Estudiante *estudiante3 = crearEstudiante("daniel",1034,fecha2);
+    Estudiante *estudiante4 = crearEstudiante("norber",1235,fecha2);
     Estudiante *estudiante5 = crearEstudiante("fer",123233,fecha);
     Estudiante *estudiante6 = crearEstudiante("leo",6666,fecha);
-
 
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante1));
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante2));
@@ -61,24 +61,16 @@ int main() {
     agregarMateria(lista_materias,materia9);
     agregarMateria(lista_materias,materia10);
 
+    /*
     anotarseEnMateria(estudiante1,materia2);
     anotarseEnMateria(estudiante1,materia3);
     anotarseEnMateria(estudiante1,materia4);
     anotarseEnMateria(estudiante1,materia1);
+    */
 
     agregarCorrelativas(materia3,materia2);
     agregarCorrelativas(materia3,materia1);
 
-    /*
-    anotarseEnMateria(estudiante1,materia3);
-    anotarseEnMateria(estudiante1,materia4);
-    anotarseEnMateria(estudiante1,materia1);
-    anotarseEnMateria(estudiante1,materia2);
-    setNota(estudiante1);
-    anotarseEnMateria(estudiante1,materia2);
-    setNota(estudiante1);
-    setNota(estudiante1);
-    anotarseEnMateria(estudiante1,materia1);*/
 
     do {
         printf("\n---- MENU ----\n");
@@ -144,7 +136,8 @@ int main() {
                     printf("\nSeleccione lo que desea modificar:\n");
                     printf("1. Nombre\n");
                     printf("2. ID\n");
-                    printf("3. Salir al menu principal\n");
+                    printf("3. Agregar correlativas\n");
+                    printf("4. Salir al menu principal\n");
                     scanf("%d", &opcion);
                     getchar();
                     switch (opcion) {
@@ -155,6 +148,17 @@ int main() {
                             modificarIDMateriaGeneral(buscada);
                             break;
                         case 3:
+                            imprimirMaterias(lista_materias);
+                            int id;
+                            printf("Ingrese el id de la materia a agregar como correlativa: \n");
+                            scanf("%d", &id);
+                            Materia *correlativa = buscarMateriaPorId(lista_materias,id);
+                            if (buscada == NULL){
+                                break;
+                            }
+                            agregarCorrelativas(buscada,correlativa);
+                            break;
+                        case 4:
                             printf("Volviendo al menu principal \n");
                             break;
                     }
@@ -206,7 +210,8 @@ int main() {
                     printf("Ingrese su opcion: \n");
                     printf("1. Buscar por DNI:\n");
                     printf("2. Buscar por nombre:\n");
-                    printf("3. Volver al menu principal:\n");
+                    printf("3. Buscar por rango de edad:\n");
+                    printf("4. Volver al menu principal:\n");
                     scanf("%d",&opcion_busqueda);
                     switch (opcion_busqueda) {
                         case 1:{
@@ -225,6 +230,15 @@ int main() {
                             break;
                         }
                         case 3:{
+                            int minimo, max;
+                            printf("Ingrese la edad minima: \n");
+                            scanf("%d", &minimo);
+                            printf("Ingrese la edad maxima: \n");
+                            scanf("%d", &max);
+                            imprimirListaEstudiantesPaginada(buscarEstudiantesPorRangoEdad(lista_estudiantes,minimo,max));
+                            break;
+                        }
+                        case 4:{
                             printf("Volviendo al menu principal: \n");
                             break;
                         }
@@ -247,6 +261,7 @@ int main() {
                     break;
                 }
                 anotarseEnMateria(estudiante,buscada);
+                break;
             }
             case 10: {
                 imprimirListaEstudiantes(lista_estudiantes);

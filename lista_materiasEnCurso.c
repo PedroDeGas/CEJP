@@ -25,7 +25,7 @@ void agregarMateriaEnCurso(listaMateriasEnCurso *lista, NodoMateriaEstudiante *n
 
 void imprimirListaMateriasEnCurso(listaMateriasEnCurso *lista) {
     if (lista == NULL || lista->head == NULL) {
-        printf("Error: lista vacia\n");
+        printf("El estudiante no se encuentra cursando ninguna materia\n");
         return;
     }
     NodoMateriaEstudiante *cursor = lista->head;
