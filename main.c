@@ -29,33 +29,56 @@ int main() {
     Materia *materia3 = crearMateria("fisica",3);
     Materia *materia4 = crearMateria("quimica",4);
     Materia *materia5 = crearMateria("ayp3",5);
+    Materia *materia6 = crearMateria("electronica",6);
+    Materia *materia7 = crearMateria("sistemas",7);
+    Materia *materia8 = crearMateria("cultura",8);
+    Materia *materia9 = crearMateria("ayp2",9);
+    Materia *materia10 = crearMateria("datos",10);
 
     Estudiante *estudiante1 = crearEstudiante("pedro",1234,fecha);
     Estudiante *estudiante2 = crearEstudiante("juan",124,fecha);
     Estudiante *estudiante3 = crearEstudiante("daniel",1034,fecha);
     Estudiante *estudiante4 = crearEstudiante("norber",1235,fecha);
+    Estudiante *estudiante5 = crearEstudiante("fer",123233,fecha);
+    Estudiante *estudiante6 = crearEstudiante("leo",6666,fecha);
+
 
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante1));
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante2));
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante3));
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante4));
+    agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante5));
+    agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante6));
 
     agregarMateria(lista_materias,materia1);
     agregarMateria(lista_materias,materia2);
     agregarMateria(lista_materias,materia3);
     agregarMateria(lista_materias,materia4);
     agregarMateria(lista_materias,materia5);
+    agregarMateria(lista_materias,materia6);
+    agregarMateria(lista_materias,materia7);
+    agregarMateria(lista_materias,materia8);
+    agregarMateria(lista_materias,materia9);
+    agregarMateria(lista_materias,materia10);
 
-    agregarCorrelativas(materia1,materia2);
-    agregarCorrelativas(materia2,materia3);
-    agregarCorrelativas(materia1,materia4);
-
+    anotarseEnMateria(estudiante1,materia2);
+    anotarseEnMateria(estudiante1,materia3);
+    anotarseEnMateria(estudiante1,materia4);
     anotarseEnMateria(estudiante1,materia1);
-    anotarseEnMateria(estudiante2,materia1);
-    anotarseEnMateria(estudiante2,materia2);
-    anotarseEnMateria(estudiante3,materia1);
-    anotarseEnMateria(estudiante3,materia2);
 
+    agregarCorrelativas(materia3,materia2);
+    agregarCorrelativas(materia3,materia1);
+
+    /*
+    anotarseEnMateria(estudiante1,materia3);
+    anotarseEnMateria(estudiante1,materia4);
+    anotarseEnMateria(estudiante1,materia1);
+    anotarseEnMateria(estudiante1,materia2);
+    setNota(estudiante1);
+    anotarseEnMateria(estudiante1,materia2);
+    setNota(estudiante1);
+    setNota(estudiante1);
+    anotarseEnMateria(estudiante1,materia1);*/
 
     do {
         printf("\n---- MENU ----\n");
@@ -171,11 +194,11 @@ int main() {
                 break;
             }
             case 6: {
-                imprimirListaEstudiantes(lista_estudiantes);
+                imprimirListaEstudiantesPaginada(lista_estudiantes);
                 break;
             }
             case 7: {
-                imprimirMaterias(lista_materias);
+                imprimirListaMateriasPaginada(lista_materias);
                 break;
             }
             case 8: {
@@ -209,10 +232,33 @@ int main() {
                 break;
             }
             case 9: {
-
+                imprimirListaEstudiantes(lista_estudiantes);
+                int dni;
+                printf("Ingrese el dni del estudiante para anotarse en una materia: \n");
+                scanf("%d",&dni);
+                Estudiante *estudiante = buscarEstudiantePorDNI(lista_estudiantes,dni);
+                printf("Materias disponibles: \n"); //Estaria bueno que solo muestre las materias a las que se puede anotar x estudiante
+                imprimirMaterias(lista_materias);
+                int id;
+                printf("Seleccione el ID de la materia: \n");
+                scanf("%d",&id);
+                Materia *buscada = buscarMateriaPorId(lista_materias,id);
+                if (buscada == NULL || estudiante == NULL){
+                    break;
+                }
+                anotarseEnMateria(estudiante,buscada);
             }
             case 10: {
-
+                imprimirListaEstudiantes(lista_estudiantes);
+                int dni;
+                printf("Ingrese el dni del estudiante para anotarse en una materia: \n");
+                scanf("%d",&dni);
+                Estudiante *estudiante = buscarEstudiantePorDNI(lista_estudiantes,dni);
+                if (estudiante == NULL){
+                    break;
+                }
+                setNota(estudiante);
+                break;
             }
             case 11: {
                 printf("Saliendo del programa...\n");

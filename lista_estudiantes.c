@@ -14,17 +14,17 @@ ListaEstudiante *crearListaEstudiantes(){
 
 void agregarEstudiante(ListaEstudiante *lista,NodoEstudiante *nodo) {
     if (lista->head == NULL){
-        printf("\nAgregado a lista vacia");
+        printf("Agregado a lista vacia\n");
         lista->head = nodo;
         lista->tail = nodo;
     }else {
-        printf("\nAgregado al final de la lista");
+        printf("Agregado al final de la lista\n");
         nodo->prev = lista->tail;
         lista->tail = nodo;
         lista->tail->prev->proximo = lista->tail;
-        printf("\nAnteultimo: %d, Ultimo: %d", lista->tail->prev->estudiante->dni, lista->tail->estudiante->dni);
+        printf("Anteultimo: %d, Ultimo: %d\n", lista->tail->prev->estudiante->dni, lista->tail->estudiante->dni);
     }
-    printf("\nEstudiante -%d- agregado", lista->tail->estudiante->dni);
+    printf("Estudiante -%d- agregado\n", lista->tail->estudiante->dni);
 }
 
 void eliminarEstudiante(ListaEstudiante *lista, int dni){
@@ -187,4 +187,29 @@ void modificarListaEstudiante(ListaEstudiante *lista) {
     }
 
     printf("Estudiante con DNI %d no encontrado en la lista.\n", dniEstudiante);
+}
+
+void imprimirListaEstudiantesPaginada(ListaEstudiante *lista){
+    if(lista == NULL){
+        printf("Lista vacia");
+        return;
+    }
+
+    NodoEstudiante *actual = lista->head;
+    int contador = 0;
+
+    while(actual != NULL){
+        imprimirDatosEstudiante(actual->estudiante);
+        contador++;
+
+        //modificar esto segun la cantidad de elementos a mostrar
+        if (contador == 5) {
+            printf("[--------------------------------]\n");
+            printf("Presione enter para ver la siguiente pagina...");
+            limpiarBuffer();
+            getchar();
+        }
+        actual = actual->proximo;
+    }
+    printf("[--------------------------------]\n");
 }

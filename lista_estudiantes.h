@@ -15,5 +15,6 @@ void imprimirListaEstudiantes(ListaEstudiante *lista);
 Estudiante *buscarEstudiantePorDNI(ListaEstudiante *lista, int dni);
 Estudiante *buscarEstudiantePorNombre(ListaEstudiante *lista, char *nombre);
 ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista,Fecha *fecha_inicio, Fecha *fecha_fin);
+void imprimirListaEstudiantesPaginada(ListaEstudiante *lista);
 
 #endif

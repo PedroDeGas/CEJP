@@ -65,7 +65,7 @@ void imprimirDatosMateria(Materia *materia){
         printf("Materia no encontrada.\n");
         return;
     }
-    printf("ID: %d | Nombre: %s \n", materia->id, materia->nombre);
+    printf("ID: %d | %s \n", materia->id, materia->nombre);
 }
 void agregarCorrelativas(Materia *materia, Materia *correlativa){
     if(materia == NULL || correlativa == NULL){

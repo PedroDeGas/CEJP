@@ -16,4 +16,5 @@ void eliminarMateriaListaGeneral(ListaMaterias *lista, ListaEstudiante *lista_es
 Materia *buscarMateriaPorId(ListaMaterias *lista, int id);
 Materia *buscarMateriaPorNombre(ListaMaterias *lista, char *nombre);
 void modificarNombreMateria(ListaMaterias *lista);
+void imprimirListaMateriasPaginada(ListaMaterias *lista);
 #endif

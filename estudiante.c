@@ -101,18 +101,34 @@ void anotarseEnMateria(Estudiante *estudiante, Materia *materia) {
             return;
         }
     }
+    if (puedeAnotarse(estudiante, materia) == 0){
+        NodoMateriaEstudiante *nuevoNodo = crearNuevoNodoMateriaEstudiante(materia, -1);
+        if (nuevoNodo == NULL) {
+            printf("Error: No se pudo crear el nodo para la materia en curso.\n");
+            return;
+        }
+        agregarMateriaEnCurso(estudiante->listaEnCurso, nuevoNodo);
+        printf("El estudiante %s se ha anotado en la materia %s.\n", estudiante->nombre, materia->nombre);
+    }
+}
+
+int puedeAnotarse(Estudiante *estudiante, Materia *materia){
+    NodoMateriaEstudiante *current = estudiante->listaEnCurso->head;
 
     for (int i = 0; i < sizeof(materia->id_correlativas)/(sizeof(int)) ; ++i) {
-
+        if (materia->id_correlativas[i] == -1){
+            return 0;
+        }
+        while (current != NULL && current->materia->id != materia->id_correlativas[i]){
+            current = current->proximo;
+        }
+        printf("Materiasfdsf %d",current->materia->id);
+        if (current == NULL || current->nota <= 4){
+            printf("No se puede anotar %s a la materia, debido a la correlativa [%d]\n",estudiante->nombre,materia->id_correlativas[i]);
+            return -1;
+        }
     }
-
-    NodoMateriaEstudiante *nuevoNodo = crearNuevoNodoMateriaEstudiante(materia, -1);
-    if (nuevoNodo == NULL) {
-        printf("Error: No se pudo crear el nodo para la materia en curso.\n");
-        return;
-    }
-    agregarMateriaEnCurso(estudiante->listaEnCurso, nuevoNodo);
-    printf("El estudiante %s se ha anotado en la materia %s.\n", estudiante->nombre, materia->nombre);
+    return 0;
 }
 
 void setNota(Estudiante *estudiante) {
@@ -139,8 +155,12 @@ void setNota(Estudiante *estudiante) {
             int nuevaNota;
             printf("Ingrese la nueva nota para la materia %s: \n", cursor->materia->nombre);
             scanf("%d", &nuevaNota);
-            cursor->nota = nuevaNota;
-            printf("Nota actualizada correctamente para la materia %s.\n", cursor->materia->nombre);
+            if (nuevaNota > cursor->nota){
+                cursor->nota = nuevaNota;
+                printf("Nota actualizada correctamente para la materia %s.\n", cursor->materia->nombre);
+                return;
+            }
+            printf("La nota previa de %s es mayor a la nota actual\n", cursor->materia->nombre);
             return;
         }
         cursor = cursor->proximo;
@@ -156,6 +176,7 @@ void imprimirDatosEstudiante(Estudiante *estudiante){
         printf("Estudiante no encontrado.\n");
         return;
     }
+    printf("[--------------------------------]\n");
     printf("Nombre: %s - DNI: %d - Fecha de nacimiento: %d/%d/%d\n",
            estudiante->nombre,
            estudiante->dni,
@@ -163,12 +184,15 @@ void imprimirDatosEstudiante(Estudiante *estudiante){
            estudiante->fechaNacimiento->mes,
            estudiante->fechaNacimiento->anio);
 
-    printf("Lista de materias en curso:\n");
     NodoMateriaEstudiante *cursor = estudiante->listaEnCurso->head;
+    if (cursor == NULL){
+        printf("Actualmente sin materias en curso\n");
+        return;
+    }
+    printf("Lista de materias en curso:\n");
     while (cursor != NULL) {
         imprimirDatosMateria(cursor->materia);
-        printf("---Nota: %d---\n", cursor->nota);
+        printf(" Nota: %d\n", cursor->nota);
         cursor = cursor->proximo;
     }
-
 }

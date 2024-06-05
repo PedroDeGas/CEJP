@@ -164,3 +164,43 @@ void modificarNombreMateria(ListaMaterias *lista) {
 
     printf("Nuevo nombre de la materia: %s\n", materia->nombre);
 }
+void imprimirListaMateriasPaginada(ListaMaterias *lista) {
+    if (lista == NULL || lista->head == NULL) {
+        printf("La lista de materias está vacía.\n");
+        return;
+    }
+
+    NodoMateria *actual = lista->head;
+    int contador = 0;
+
+    while (actual != NULL) {
+        if (contador == 5) {
+            printf("[--------------------------------]\n");
+            printf("Presione Enter para continuar...\n");
+            limpiarBuffer();
+            getchar();
+            contador = 0;
+        }
+
+        printf("[--------------------------------]\n");
+        imprimirDatosMateria(actual->materia);
+        printf("Correlativas ID: [");
+        for (int i = 0; i < sizeof(actual->materia->id_correlativas) / sizeof(int); ++i) {
+            if (actual->materia->id_correlativas[i] == -1) {
+                break;
+            }
+            printf("%d", actual->materia->id_correlativas[i]);
+            if (actual->materia->id_correlativas[i + 1] != -1) {
+                printf(",");
+            }
+        }
+        printf("]\n");
+        contador++;
+
+        actual = actual->proximo;
+    }
+
+    if (contador > 0) {
+        printf("[--------------------------------]\n");
+    }
+}
