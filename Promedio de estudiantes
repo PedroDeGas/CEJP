@@ -1,0 +1,63 @@
+//funcion calcular el promedio de los estudiantes
+
+void calcular_promedio(Estudiante *estudiante) {
+    int sum = 0;
+    int count = 0;
+    Materia *materia = estudiante->materias;
+    while (materia != NULL) {
+        if (materia->nota > 0) {
+            sum += materia->nota;
+            count++;
+        }
+        materia = materia->proximo;
+    }
+    if (count > 0) {
+        float promedio = (float)sum / count;
+        printf("Promedio de %s: %.2f\n", estudiante->nombre, promedio);
+    } else {
+        printf("No hay materias rendidas para %s\n", estudiante->nombre);
+    }
+}
+
+// Función para calcular el promedio general de todos los estudiantes
+void calcular_promedio_general(Estudiante *estudiantes) {
+    int sum = 0;
+    int count = 0;
+    Estudiante *estudiante = estudiantes;
+    while (estudiante != NULL) {
+        Materia *materia = estudiante->materias;
+        while (materia != NULL) {
+            if (materia->nota > 0) {
+                sum += materia->nota;
+                count++;
+            }
+            materia = materia->proximo;
+        }
+        estudiante = estudiante->proximo;
+    }
+    if (count > 0) {
+        float promedio_general = (float)sum / count;
+        printf("Promedio general de todos los estudiantes: %.2f\n", promedio_general);
+    } else {
+        printf("No hay materias rendidas para calcular el promedio general.\n");
+    }
+}
+
+
+int main() {
+
+// Promedio de todos los estudiantes
+    printf("Promedios de todos los estudiantes:\n");
+    Estudiante *estudiante = estudiantes;
+    while (estudiante != NULL) {
+        calcular_promedio(estudiante);
+        estudiante = estudiante->proximo;
+    }
+
+// Promedio general de todos los estudiantes
+    printf("Promedio general de todos los estudiantes:\n");
+    calcular_promedio_general(estudiantes);
+ 
+return 0;
+}
+
