@@ -1,0 +1,392 @@
+//Modelo final con el promedio de los estudiantes
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Estructura de datos para los estudiantes
+typedef struct Estudiante {
+    char nombre[10];
+    int edad;
+    struct Estudiante *proximo;
+    struct Materia *materias;
+} Estudiante;
+
+// Estructura de datos para las materias
+typedef struct Materia {
+    char nombre[10];
+    int nota;
+    struct Materia *proximo;
+    struct Estudiante *estudiantes;
+    struct Materia *prerequisito; // Materia anterior requerida
+    struct Materia* izquierda;
+    struct Materia* derecha;
+} Materia;
+
+// Funciones para los estudiantes
+void alta_estudiante(Estudiante **estudiantes, char nombre[], int edad) {
+    Estudiante *new_estudiante = (Estudiante*) malloc(sizeof(Estudiante));
+    strcpy(new_estudiante->nombre, nombre);
+    new_estudiante->edad = edad;
+    new_estudiante->proximo = *estudiantes;
+    *estudiantes = new_estudiante;
+}
+
+void modificar_estudiante(Estudiante *estudiantes, char nombre[], int edad) {
+    Estudiante *actual= estudiantes;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+          actual->edad = edad;
+            break;
+        }
+       actual = actual->proximo;
+    }
+}
+
+void eliminar_estudiante(Estudiante **estudiantes, char nombre[]) {
+    Estudiante *actual = *estudiantes;
+    Estudiante *previous = NULL;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            if (previous == NULL) {
+                *estudiantes = actual->proximo;
+            } else {
+                previous->proximo = actual->proximo;
+            }
+            free(actual);
+            break;
+        }
+        previous =actual;
+        actual= actual->proximo;
+    }
+}
+
+void listar_estudiantes(Estudiante *estudiantes) {
+    Estudiante *actual = estudiantes;
+    while (actual!= NULL) {
+        printf("Nombre: %s, Edad: %d\n", actual->nombre,actual->edad);
+        actual = actual->proximo;
+    }
+}
+
+void buscar_estudiante_nombre(Estudiante *estudiantes, char nombre[]) {
+    Estudiante *actual= estudiantes;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            printf("Estudiante encontrado: %s, Edad: %d\n",actual->nombre,actual->edad);
+            break;
+        }
+       actual= actual->proximo;
+    }
+}
+
+void buscar_estudiante_edad(Estudiante *estudiantes, int edad_min, int edad_max) {
+    Estudiante *actual = estudiantes;
+    while (actual!= NULL) {
+        if (actual->edad >= edad_min && actual->edad <= edad_max) {
+            printf("Estudiante encontrado: %s, Edad: %d\n", actual->nombre, actual->edad);
+        }
+      actual= actual->proximo;
+    }
+}
+
+// Funciones para las materias
+void alta_materia(Materia **materias, char nombre[], int nota) {
+    Materia *new_materia = (Materia*) malloc(sizeof(Materia));
+    strcpy(new_materia->nombre, nombre);
+    new_materia->nota = nota;
+    new_materia->proximo = *materias;
+    *materias = new_materia;
+}
+
+void modificar_materia(Materia *materias, char nombre[], int nota) {
+    Materia *actual = materias;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            actual->nota = nota;
+            break;
+        }
+       actual= actual->proximo;
+    }
+}
+
+void eliminar_materia(Materia **materias, char nombre[]) {
+    Materia *actual = *materias;
+    Materia *previous = NULL;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            if (previous == NULL) {
+                *materias = actual->proximo;
+            } else {
+                previous->proximo= actual->proximo;
+            }
+            free(actual);
+            break;
+        }
+        previous = actual;
+        actual= actual->proximo;
+    }
+}
+
+
+// //funciones para anotarse y verificar si esta aprobado o no
+
+
+
+void listar_materias(Materia *materias) {
+    Materia *actual = materias;
+    while (actual!= NULL) {
+        printf("Nombre: %s, Nota: %d\n", actual->nombre, actual->nota);
+        actual= actual->proximo;
+    }
+}
+
+
+void anotar_estudiante_materia(Estudiante *estudiante, Materia *materia) {
+    materia->estudiantes = estudiante;
+    estudiante->materias = materia;
+}
+
+void rendir_materia(Estudiante *estudiante, char nombre[], int nota) {
+    Materia *actual = estudiante->materias;
+    while (actual!= NULL) {
+        if (strcmp(actual->nombre, nombre) == 0) {
+            actual->nota = nota;
+            break;
+        }
+        actual= actual->proximo;
+    }
+}
+
+// materias rendidas
+void mostrar_materias_rendidas(Materia *materias) {
+    Materia *actual= materias;
+    while (actual!= NULL) {
+        if (actual->nota > 0) {
+            printf("Nombre: %s, Nota: %d\n", actual->nombre, actual->nota);
+        }
+        actual = actual->proximo;
+    }
+}
+// Estructura de datos para los nodos del árbol
+typedef struct Nodo {
+    char nombre[50];
+    struct Nodo *izquierda;
+    struct Nodo *derecha;
+} Nodo;
+
+// Funciones para los nodos del árbol
+
+// Función para crear un nuevo nodo de materia
+Materia* crearNodoMateria(char* nombre) {
+    Materia* nuevaMateria = (Materia*)malloc(sizeof(Materia));
+    strcpy(nuevaMateria->nombre, nombre);
+    nuevaMateria->izquierda = NULL;
+    nuevaMateria->derecha = NULL;
+    return nuevaMateria;
+}
+
+// Función para agregar una materia al árbol de correlatividad
+void agregarMateria(Materia** arbol, char* nombre) {
+    if (*arbol == NULL) {
+        *arbol = crearNodoMateria(nombre);
+    } else {
+        if (strcmp(nombre, (*arbol)->nombre) < 0) {
+            agregarMateria(&(*arbol)->izquierda, nombre);
+        } else {
+            agregarMateria(&(*arbol)->derecha, nombre);
+        }
+    }
+}
+
+// Función para imprimir el árbol de correlatividad en orden
+void imprimirArbolEnOrden(Materia* arbol) {
+    if (arbol!= NULL) {
+        imprimirArbolEnOrden(arbol->izquierda);
+        printf("%s\n", arbol->nombre);
+        imprimirArbolEnOrden(arbol->derecha);
+    }
+}
+
+// Función para imprimir el árbol de correlatividad en preorden
+void imprimirArbolEnPreorden(Materia* arbol) {
+    if (arbol!= NULL) {
+        printf("%s\n", arbol->nombre);
+        imprimirArbolEnPreorden(arbol->izquierda);
+        imprimirArbolEnPreorden(arbol->derecha);
+    }
+}
+
+// Función para imprimir el árbol de correlatividad en postorden
+void imprimirArbolEnPostorden(Materia* arbol) {
+    if (arbol!= NULL) {
+        imprimirArbolEnPostorden(arbol->izquierda);
+        imprimirArbolEnPostorden(arbol->derecha);
+        printf("%s\n", arbol->nombre);
+    }
+}
+
+// Función para imprimir el árbol de correlatividad en el menú principal
+void mostrarArbolCorrelatividad(Materia* arbol) {
+    printf("Árbol de Correlatividad:\n");
+    printf("---------------------\n");
+    imprimirArbolEnPreorden(arbol);
+    printf("---------------------\n");
+}
+
+// Función para imprimir el árbol en preorden con indentación
+void imprimirArbolEnPreordenConIndentacion(Materia* arbol, int nivel) {
+    if (arbol!= NULL) {
+        for (int i = 0; i < nivel; i++) {
+            printf("  ");
+        }
+        printf("%s\n", arbol->nombre);
+        imprimirArbolEnPreordenConIndentacion(arbol->izquierda, nivel + 1);
+        imprimirArbolEnPreordenConIndentacion(arbol->derecha, nivel + 1);
+    }
+}
+
+//funcion calcular promedio de los estudiantes
+void calcular_promedio(Estudiante *estudiante) {
+    int sum = 0;
+    int count = 0;
+    Materia *materia = estudiante->materias;
+    while (materia != NULL) {
+        if (materia->nota > 0) {
+            sum += materia->nota;
+            count++;
+        }
+        materia = materia->proximo;
+    }
+    if (count > 0) {
+        float promedio = (float)sum / count;
+        printf("Promedio de %s: %.2f\n", estudiante->nombre, promedio);
+    } else {
+        printf("No hay materias rendidas para %s\n", estudiante->nombre);
+    }
+}
+
+// Función para calcular el promedio general de todos los estudiantes
+void calcular_promedio_general(Estudiante *estudiantes) {
+    int sum = 0;
+    int count = 0;
+    Estudiante *estudiante = estudiantes;
+    while (estudiante != NULL) {
+        Materia *materia = estudiante->materias;
+        while (materia != NULL) {
+            if (materia->nota > 0) {
+                sum += materia->nota;
+                count++;
+            }
+            materia = materia->proximo;
+        }
+        estudiante = estudiante->proximo;
+    }
+    if (count > 0) {
+        float promedio_general = (float)sum / count;
+        printf("Promedio general de todos los estudiantes: %.2f\n", promedio_general);
+    } else {
+        printf("No hay materias rendidas para calcular el promedio general.\n");
+    }
+}
+
+
+
+
+
+int main() {
+      // Crear árbol vacío
+   
+    Materia* arbol = NULL;
+
+    // Agregar materias al árbol
+    agregarMateria(&arbol, "Matemáticas");
+    agregarMateria(&arbol, "Física");
+    agregarMateria(&arbol, "Química");
+    agregarMateria(&arbol, "Biología");
+    agregarMateria(&arbol, "Programación");
+    agregarMateria(&arbol, "Estructuras de Datos");
+    agregarMateria(&arbol, "Algoritmos");
+
+    // Mostrar el árbol de correlatividad
+    mostrarArbolCorrelatividad(arbol);
+   
+    
+    // Crear listas vacías
+    Estudiante *estudiantes = NULL;
+    Materia *materias = NULL;
+
+    // Dar de alta estudiantes
+    alta_estudiante(&estudiantes, "Juan", 20);
+    alta_estudiante(&estudiantes, "Maria", 22);
+     alta_estudiante(&estudiantes, "Marcelo", 21);
+    alta_estudiante(&estudiantes, "Carla", 22);
+     alta_estudiante(&estudiantes, "Lucas", 23);
+    alta_estudiante(&estudiantes, "Milagros", 20);
+
+    // Dar de alta materias
+    alta_materia(&materias, "Matemáticas", 0);
+    alta_materia(&materias, "Física", 0);
+    alta_materia(&materias, "Biologia", 0);
+    alta_materia(&materias, "Algebra", 0);
+    alta_materia(&materias, "Programación", 0);
+    alta_materia(&materias, "Quimica", 0);
+   
+    // Anotar estudiantes en materias
+   printf("Los estudiantes se anotan a las materias:\n");
+    anotar_estudiante_materia(estudiantes, materias);
+    anotar_estudiante_materia(estudiantes->proximo, materias->proximo);
+    
+
+    // Rendir materias
+    printf("Lista de materias rendidas:\n");
+    rendir_materia(estudiantes, "Matemáticas", 8);
+    rendir_materia(estudiantes->proximo, "Biologia", 7);
+    rendir_materia(estudiantes, "Algebra", 10);
+    rendir_materia(estudiantes->proximo, "Física", 3);
+    rendir_materia(estudiantes, "Programacion", 8);
+    rendir_materia(estudiantes->proximo, "Quimica", 2);
+
+    // Listar estudiantes
+    printf("Lista de estudiantes:\n");
+    listar_estudiantes(estudiantes);
+
+    // Listar materias
+    printf("Lista de materias:\n");
+    listar_materias(materias);
+
+    // Buscar estudiante por nombre
+    printf("Buscando estudiante 'Juan':\n");
+    buscar_estudiante_nombre(estudiantes, "Juan");
+
+    // Buscar estudiantes por rango de edad
+    printf("Buscando estudiantes entre 20 y 25 años:\n");
+    buscar_estudiante_edad(estudiantes, 20, 25);
+
+    // Modificar estudiante
+    printf("Modificando edad de estudiante 'Juan' a 21:\n");
+    modificar_estudiante(estudiantes, "Juan", 21);
+
+    // Eliminar estudiante
+    printf("Eliminando estudiante 'Juan':\n");
+    eliminar_estudiante(&estudiantes, "Juan");
+
+    // Listar estudiantes
+    printf("Lista de estudiantes después de eliminar a 'Juan':\n");
+    listar_estudiantes(estudiantes);
+ 
+   // Promedio de todos los estudiantes
+    printf("Promedios de todos los estudiantes:\n");
+    Estudiante *estudiante = estudiantes;
+    while (estudiante != NULL) {
+        calcular_promedio(estudiante);
+        estudiante = estudiante->proximo;
+    }
+   // Promedio general de todos los estudiantes
+    printf("Promedio general de todos los estudiantes:\n");
+    calcular_promedio_general(estudiantes);
+
+
+    return 0;
+}
