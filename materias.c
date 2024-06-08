@@ -26,6 +26,7 @@ void modificarIDMateriaGeneral(Materia *materia){
         return;
     }
 
+    printf("");
     printf("Ingrese el nuevo id para la materia:\n");
     int nuevo_id;
     scanf("%d",&nuevo_id);
@@ -40,7 +41,7 @@ void modificarIDMateriaGeneral(Materia *materia){
 }
 
 void modificarNombreMateriaGeneral(Materia *materia){
-    printf("Ingrese el nombre para la materia: ");
+    printf("Ingrese el nombre para la materia: \n");
     char nuevoNombre[100];
 
     scanf("%s", nuevoNombre);
@@ -65,7 +66,7 @@ void imprimirDatosMateria(Materia *materia){
         printf("Materia no encontrada.\n");
         return;
     }
-    printf("ID: %d | %s \n", materia->id, materia->nombre);
+    printf("| ID: %d | %s |\n", materia->id, materia->nombre);
 }
 void agregarCorrelativas(Materia *materia, Materia *correlativa){
     if(materia == NULL || correlativa == NULL){

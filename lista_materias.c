@@ -46,15 +46,14 @@ void imprimirMaterias(ListaMaterias *lista) {
     printf("Materias disponibles:\n");
     NodoMateria *cursor = lista->head;
     while (cursor != NULL) {
-        printf("ID: %d\nNombre: %s\n", cursor->materia->id, cursor->materia->nombre);
-        printf("Correlativas: \n");
+        printf("| ID: %d | Nombre: %s  | \n", cursor->materia->id, cursor->materia->nombre);
 
-        printf("ID correlativas: ");
+        printf("| Correlativas ID: ");
         for (int i = 0; i < sizeof(cursor->materia->id_correlativas)/(sizeof(int)) ; ++i) {
             if (cursor->materia->id_correlativas[i] == -1){
                 break;
             }
-            printf("[%d] ",cursor->materia->id_correlativas[i]);
+            printf("[%d] | ",cursor->materia->id_correlativas[i]);
         }
         printf("\n");
         cursor = cursor->proximo;

@@ -5,6 +5,14 @@
 #include "string.h"
 #include "lista_materias.h"
 
+void limpiarConsola() {
+#if defined(_WIN32) || defined(_WIN64)
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
 ListaEstudiante *crearListaEstudiantes(){
     ListaEstudiante *lista = malloc(sizeof(ListaEstudiante));
     lista->head = NULL;
@@ -14,17 +22,13 @@ ListaEstudiante *crearListaEstudiantes(){
 
 void agregarEstudiante(ListaEstudiante *lista,NodoEstudiante *nodo) {
     if (lista->head == NULL){
-        printf("Agregado a lista vacia\n");
         lista->head = nodo;
         lista->tail = nodo;
     }else {
-        printf("Agregado al final de la lista\n");
         nodo->prev = lista->tail;
         lista->tail = nodo;
         lista->tail->prev->proximo = lista->tail;
-        printf("Anteultimo: %d, Ultimo: %d\n", lista->tail->prev->estudiante->dni, lista->tail->estudiante->dni);
     }
-    printf("Estudiante -%d- agregado\n", lista->tail->estudiante->dni);
 }
 
 void eliminarEstudiante(ListaEstudiante *lista, int dni){
@@ -72,7 +76,6 @@ Estudiante *buscarEstudiantePorDNI(ListaEstudiante *lista, int dni) {
         actual = actual->proximo;
     }
 
-    printf("Estudiante con DNI %d no encontrado.\n", dni);
     return NULL;
 }
 
@@ -106,10 +109,18 @@ ListaEstudiante *buscarEstudiantesPorRangoEdad(ListaEstudiante *lista, int minim
 
     NodoEstudiante *cursor = lista->head;
     while (cursor != NULL) {
-        if ((calcularEdad(cursor->estudiante->fechaNacimiento)->anio >= minimo) && (calcularEdad(cursor->estudiante->fechaNacimiento)->anio <= max)) {
+        Fecha *edad = calcularEdad(cursor->estudiante->fechaNacimiento);
+        if (edad == NULL) {
+            printf("Error al calcular la edad del estudiante.\n");
+            cursor = cursor->proximo;
+            continue;
+        }
+
+        if (edad->anio >= minimo && edad->anio <= max) {
             agregarEstudiante(estudiantes_en_rango, cursor);
         }
 
+        free(edad);
         cursor = cursor->proximo;
     }
     return estudiantes_en_rango;
@@ -194,6 +205,9 @@ void imprimirListaEstudiantesPaginada(ListaEstudiante *lista){
 
     while(actual != NULL){
         imprimirDatosEstudiante(actual->estudiante);
+
+        float promedio = calcularPromedioEstudiante(actual->estudiante);
+        printf("| Promedio: %.2f |\n", promedio);
         contador++;
 
         //modificar esto segun la cantidad de elementos a mostrar

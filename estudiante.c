@@ -52,8 +52,11 @@ void asignarFechaDeNacimiento(Estudiante *estudiante) {
     if(nuevaFecha != NULL){
         free(estudiante->fechaNacimiento);
         estudiante->fechaNacimiento = nuevaFecha;
-
-        printf("Fecha de nacimiento actualizada a: %d/%d/%d\n", estudiante->fechaNacimiento->dia, estudiante->fechaNacimiento->mes, estudiante->fechaNacimiento->anio);
+        printf("\n");
+        printf("Fecha de nacimiento actualizada a: %d/%d/%d\n",
+               estudiante->fechaNacimiento->dia,
+               estudiante->fechaNacimiento->mes,
+               estudiante->fechaNacimiento->anio);
     }
     return;
 }
@@ -224,10 +227,35 @@ void imprimirDatosEstudiante(Estudiante *estudiante){
         printf("Actualmente sin materias en curso\n");
         return;
     }
-    printf("Lista de materias en curso:\n");
+    printf("| Lista de materias en curso: |\n");
     while (cursor != NULL) {
         imprimirDatosMateria(cursor->materia);
-        printf(" Nota: %d\n", cursor->nota);
+        printf("| Nota: %d |\n", cursor->nota);
         cursor = cursor->proximo;
     }
+}
+
+float calcularPromedioEstudiante(Estudiante *estudiante) {
+    if (estudiante == NULL || estudiante->listaEnCurso == NULL || estudiante->listaEnCurso->head == NULL) {
+        printf("El estudiante no tiene materias en curso.\n");
+        return 0.0;
+    }
+
+    NodoMateriaEstudiante *actual = estudiante->listaEnCurso->head;
+    int sum = 0;
+    int cantidadMaterias = 0;
+
+    while (actual != NULL) {
+        if (actual->nota != -1) {
+            sum += actual->nota;
+            cantidadMaterias++;
+        }
+        actual = actual->proximo;
+    }
+
+    if (cantidadMaterias == 0) {
+        return 0.0;
+    }
+
+    return (float)sum / cantidadMaterias;
 }

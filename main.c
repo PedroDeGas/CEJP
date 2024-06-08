@@ -1,11 +1,8 @@
 #include "materias.h"
 #include "estudiante.h"
-#include "lista_materiasEnCurso.h"
 #include "lista_materias.h"
 #include <stdio.h>
 #include "lista_estudiantes.h"
-#include "malloc.h"
-#include "string.h"
 
 Estudiante *crearEstudianteMenu(){
 
@@ -22,6 +19,10 @@ int main() {
     int opcion;
     Fecha *fecha = crearFecha(12,12,1999);
     Fecha *fecha2 = crearFecha(12,12,1920);
+    Fecha *fecha3 = crearFecha(12,12,2005);
+    Fecha *fecha4 = crearFecha(12,12,1910);
+    Fecha *fecha5 = crearFecha(12,12,2010);
+    Fecha *fecha6= crearFecha(12,12,2001);
     ListaEstudiante *lista_estudiantes = crearListaEstudiantes();
     ListaMaterias *lista_materias = crearNuevaListaMaterias();
 
@@ -38,10 +39,10 @@ int main() {
 
     Estudiante *estudiante1 = crearEstudiante("pedro",1234,fecha);
     Estudiante *estudiante2 = crearEstudiante("juan",124,fecha2);
-    Estudiante *estudiante3 = crearEstudiante("daniel",1034,fecha2);
-    Estudiante *estudiante4 = crearEstudiante("norber",1235,fecha2);
-    Estudiante *estudiante5 = crearEstudiante("fer",123233,fecha);
-    Estudiante *estudiante6 = crearEstudiante("leo",6666,fecha);
+    Estudiante *estudiante3 = crearEstudiante("daniel",1034,fecha3);
+    Estudiante *estudiante4 = crearEstudiante("norber",1235,fecha4);
+    Estudiante *estudiante5 = crearEstudiante("fer",123233,fecha5);
+    Estudiante *estudiante6 = crearEstudiante("leo",6666,fecha6);
 
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante1));
     agregarEstudiante(lista_estudiantes, crearNuevoNodoEstudiante(estudiante2));
@@ -61,31 +62,24 @@ int main() {
     agregarMateria(lista_materias,materia9);
     agregarMateria(lista_materias,materia10);
 
-    anotarseEnMateria(estudiante1,materia1);
-    anotarseEnMateria(estudiante1,materia3);
-    anotarseEnMateria(estudiante1,materia4);
-    anotarseEnMateria(estudiante1,materia1);
-
-    agregarCorrelativas(materia3,materia2);
-    agregarCorrelativas(materia3,materia1);
-
-
     do {
-        printf("\n---- MENU ----\n");
-        printf("0. Crear materias\n");
-        printf("1. Crear estudiante\n");
-        printf("2. Modificar estudiante\n");
-        printf("3. Modificar materia\n");
-        printf("4. Eliminar estudiante\n");
-        printf("5. Eliminar materia\n");
-        printf("6. Listar estudiantes\n");
-        printf("7. Listar materias\n");
-        printf("8. Buscar estudiante\n");
-        printf("9. Anotar a materia\n");
-        printf("10. Rendir materia\n");
-        printf("11. Exportar a CSV\n");
-        printf("12. Salir\n");
-        printf("Seleccione una opcion: \n");
+        printf("\n+----------------------------+\n");
+        printf("|           MENU             |\n");
+        printf("+----------------------------+\n");
+        printf("| 0. Crear materias          |\n");
+        printf("| 1. Crear estudiante        |\n");
+        printf("| 2. Modificar estudiante    |\n");
+        printf("| 3. Modificar materia       |\n");
+        printf("| 4. Eliminar estudiante     |\n");
+        printf("| 5. Eliminar materia        |\n");
+        printf("| 6. Listar estudiantes      |\n");
+        printf("| 7. Listar materias         |\n");
+        printf("| 8. Buscar estudiante       |\n");
+        printf("| 9. Anotar a materia        |\n");
+        printf("| 10. Rendir materia         |\n");
+        printf("| 11. Exportar a CSV         |\n");
+        printf("| 12. Salir                  |\n");
+        printf("+----------------------------+\n");
         scanf("%d", &opcion);
 
         switch (opcion) {
@@ -161,7 +155,7 @@ int main() {
                             printf("Volviendo al menu principal \n");
                             break;
                     }
-                } while (opcion != 3);
+                } while (opcion != 4);
                 break;
             }
             case 4: {
@@ -207,10 +201,10 @@ int main() {
             case 8: {
                 int opcion_busqueda;
                     printf("Ingrese su opcion: \n");
-                    printf("1. Buscar por DNI:\n");
-                    printf("2. Buscar por nombre:\n");
-                    printf("3. Buscar por rango de edad:\n");
-                    printf("4. Volver al menu principal:\n");
+                    printf("1. Buscar por DNI\n");
+                    printf("2. Buscar por nombre\n");
+                    printf("3. Buscar por rango de edad\n");
+                    printf("4. Volver al menu principal\n");
                     scanf("%d",&opcion_busqueda);
                     switch (opcion_busqueda) {
                         case 1:{
@@ -250,7 +244,7 @@ int main() {
                 printf("Ingrese el dni del estudiante para anotarse en una materia: \n");
                 scanf("%d",&dni);
                 Estudiante *estudiante = buscarEstudiantePorDNI(lista_estudiantes,dni);
-                printf("Materias disponibles: \n"); //Estaria bueno que solo muestre las materias a las que se puede anotar x estudiante
+                printf("Materias disponibles: \n");
                 imprimirMaterias(lista_materias);
                 int id;
                 printf("Seleccione el ID de la materia: \n");

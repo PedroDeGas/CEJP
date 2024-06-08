@@ -53,8 +53,7 @@
 				6,
 				7,
 				8,
-				9,
-				10
+				9
 			]
 		}
 	],
@@ -100,8 +99,7 @@
 				6,
 				7,
 				8,
-				9,
-				10
+				9
 			]
 		}
 	],
@@ -165,12 +163,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "nodo_materiaestudiante.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "arboldecorrelatividad.c",
 			"sourceGroupIndex" : 0
 		}
 	],
