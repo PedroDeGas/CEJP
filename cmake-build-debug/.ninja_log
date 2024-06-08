@@ -1,6 +1,6 @@
 # ninja log v5
-1	136	7395725845485865	build.ninja	6fb690347a547c2f
-3	347	7395688372681793	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
+1	440	7395781886518149	build.ninja	6fb690347a547c2f
+2	81	7395747556291541	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
 24	176	7391555583792790	CMakeFiles/Sistema.dir/nodo_materia.c.obj	dc9bad10f422328e
 9	228	7388099358928122	CMakeFiles/Sistema.dir/fechas.c.obj	d1ccb734a3dd6786
 2	90	7395688929057709	CMakeFiles/Sistema.dir/lista_estudiantes.c.obj	b75494b709738a27
@@ -10,12 +10,5 @@
 28	347	7395688372704783	CMakeFiles/Sistema.dir/nodo_estudiante.c.obj	d09f47b77244c8b4
 9	344	7395688372681793	CMakeFiles/Sistema.dir/estudiante.c.obj	1e8582d7894994e6
 29	173	7391555583591971	CMakeFiles/Sistema.dir/nodo_materiaestudiante.c.obj	f21978fe6c57b5b1
-91	180	7395688929914902	Sistema.exe	ded67668b2520f97
-7	86	7390693391227882	CMakeFiles/Sistema.dir/arboldecorrelatividad.c.obj	bac3b057ecb924c8
-1	440	7395725845485865	build.ninja	6fb690347a547c2f
-2	129	7395725847700595	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
-129	358	7395725849958824	Sistema.exe	95b10c78c4dd5c07
-3	77	7395737472270729	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
-78	166	7395737473123532	Sistema.exe	95b10c78c4dd5c07
-2	81	7395747556291541	CMakeFiles/Sistema.dir/main.c.obj	18173082ccbd4606
 82	169	7395747557139959	Sistema.exe	95b10c78c4dd5c07
+7	86	7390693391227882	CMakeFiles/Sistema.dir/arboldecorrelatividad.c.obj	bac3b057ecb924c8

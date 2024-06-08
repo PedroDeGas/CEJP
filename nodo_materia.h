@@ -4,7 +4,6 @@
 
 typedef struct structNodoMateria {
     Materia *materia;
-    int nota;
     struct structNodoMateria *proximo;
 } NodoMateria;
 

@@ -46,7 +46,7 @@ Repositorio para el TP final de AyP III - Programación de bajo nivel
         3. id_correlativas[5] = me permite almacenar el id de las materias correlativas | Cuando se crea una nueva
             materia, las posiciones del array se inicializan en -1
 
-## Metodos correspondientes a materia
+### Metodos correspondientes a materia
     crearMateria()
         Recibe por parametro el nombre y el id y los inicializa
     
@@ -67,7 +67,7 @@ Repositorio para el TP final de AyP III - Programación de bajo nivel
     Decidimos el uso de una estructura para las fechas, para poder manejarlas de una manera mas personalizada
     Fecha se compone de tres atributos enteros, dia, mes y anio
 
-## Metodos de la clase Fecha
+### Metodos de la clase Fecha
     validacionFecha()
         Verifica que la fecha ingresada primero, sea correcta y segundo que sea coherente (no vamos a crear personas
         que nacieron antes del 1900) para poner un limite.
@@ -94,7 +94,7 @@ Repositorio para el TP final de AyP III - Programación de bajo nivel
 # Lista Estudiantes
     Compuesta por NodoEstudiante (Estudiante, *proximo, *prev), almacena todos los estudiantes que se vayan creando.
 
-## Metodos de lista estudiantes
+### Metodos de lista estudiantes
     crearListaEstudiantes()
         Se comprueba que haya memoria y devuelve una lista
     agregarEstudiante()
@@ -124,7 +124,7 @@ Repositorio para el TP final de AyP III - Programación de bajo nivel
     Compuesto por NodoMateria (Materia y proximo)
     Aqui se almacenan todas las materias que se vayan creando, para tenerlas organizadas.
 
-## Metodos de la lista materias
+### Metodos de la lista materias
     crearNuevaListaMaterias()
         Verifica si hay memoria disponible
         Devuelve NULL en caso de que no haya memoria o una lista de materias vacia
@@ -150,6 +150,7 @@ Repositorio para el TP final de AyP III - Programación de bajo nivel
     Almacena las materias en curso de cada estudiante
     Compuesta por NodoMateriaEstudiante (almacena la materia, la nota y un puntero al proximo)
 
+### Metodos de la lista en curso
     crearNuevaListaMateriaEnCurso()
         Verifica si hay memoria y devuelve NULL o una lista de materias en curso
     agregarMateriaEnCurso()
@@ -163,3 +164,5 @@ Repositorio para el TP final de AyP III - Programación de bajo nivel
         Se elimina la materia pasada por parametro
         Se itera la lista buscando que coincida el id de la materia pasada por parametro con la de la lista
         Si hay match, se elimina de la lista de materias en curso.
+
+### Trabajo realizado por: Juan Pablo Miguel, Enzo Mauas, Camila Di Mario, Pedro De Gaspari
